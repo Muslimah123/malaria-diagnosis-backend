@@ -3,3 +3,9 @@ from app.schemas.patient import PatientSchema
 from app.schemas.image import ImageSchema
 from app.schemas.diagnosis_result import DiagnosisResultSchema
 from app.schemas.metadata import MetadataSchema
+from app.schemas.visit import VisitSchema
+from app.schemas.notification import NotificationSchema
+from app.schemas.chat import ChatSchema
+from app.schemas.message import MessageSchema
+from app.schemas.backup_code import BackupCodeSchema
+from app.schemas.remembered_device import RememberedDeviceSchema

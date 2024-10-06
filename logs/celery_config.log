@@ -1,0 +1,677 @@
+2024-09-24 21:14:48,852 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:14:48,852 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:14:48,865 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:14:48,865 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:14:48,871 - app.factory - INFO - App startup
+2024-09-24 21:14:49,933 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-09-24 21:14:49,934 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-09-24 21:14:52,836 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:14:52] "GET /socket.io/?EIO=4&transport=polling&t=tfpcw1jb HTTP/1.1" 200 -
+2024-09-24 21:14:52,846 - root - INFO - Client connected: YPGR259D6flx6rkHAAAB
+2024-09-24 21:14:52,846 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:14:52] "POST /socket.io/?EIO=4&transport=polling&t=tfpd52ie&sid=N7uvzE-ccATNDY8IAAAA HTTP/1.1" 200 -
+2024-09-24 21:14:52,854 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:14:52] "GET /socket.io/?EIO=4&transport=polling&t=tfpdgqbm&sid=N7uvzE-ccATNDY8IAAAA HTTP/1.1" 200 -
+2024-09-24 21:14:52,871 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:14:52] "GET /socket.io/?EIO=4&transport=polling&t=tfpdwtfz&sid=N7uvzE-ccATNDY8IAAAA HTTP/1.1" 200 -
+2024-09-24 21:15:28,310 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:28,310 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:28,312 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:28,312 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:28,318 - app.factory - INFO - App startup
+2024-09-24 21:15:34,441 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:34,441 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:34,442 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:34,445 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:34,453 - app.factory - INFO - App startup
+2024-09-24 21:15:34,467 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:34,467 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:34,468 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:34,470 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:34,479 - app.factory - INFO - App startup
+2024-09-24 21:15:34,487 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:34,487 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:34,488 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:34,490 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:34,496 - app.factory - INFO - App startup
+2024-09-24 21:15:35,272 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:35,273 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:35,273 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:35,277 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:35,287 - app.factory - INFO - App startup
+2024-09-24 21:15:40,362 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:40,362 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:40,363 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:40,365 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:40,371 - app.factory - INFO - App startup
+2024-09-24 21:15:40,653 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:40,653 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:40,654 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:40,656 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:40,663 - app.factory - INFO - App startup
+2024-09-24 21:15:40,902 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:40,902 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:40,902 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:40,905 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:40,910 - app.factory - INFO - App startup
+2024-09-24 21:15:41,508 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:41,508 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:41,509 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:41,511 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:41,519 - app.factory - INFO - App startup
+2024-09-24 21:15:46,093 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:46,093 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:46,093 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:46,096 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:46,106 - app.factory - INFO - App startup
+2024-09-24 21:15:46,129 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:46,130 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:46,130 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:46,131 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:46,136 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:46,137 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:46,137 - app.factory - INFO - App startup
+2024-09-24 21:15:46,137 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:46,140 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:46,148 - app.factory - INFO - App startup
+2024-09-24 21:15:46,694 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:46,694 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:46,694 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:46,696 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:46,704 - app.factory - INFO - App startup
+2024-09-24 21:15:51,300 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:51,300 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:51,301 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:51,302 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:51,307 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:51,307 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:51,308 - app.factory - INFO - App startup
+2024-09-24 21:15:51,307 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:51,309 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:51,314 - app.factory - INFO - App startup
+2024-09-24 21:15:51,421 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:15:51,421 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:15:51,421 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:15:51,423 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:15:51,431 - app.factory - INFO - App startup
+2024-09-24 21:16:12,492 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:16:12,492 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:16:12,506 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:16:12,507 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:16:12,511 - app.factory - INFO - App startup
+2024-09-24 21:16:13,225 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-09-24 21:16:13,225 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-09-24 21:16:13,341 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:16:13] "GET /socket.io/?EIO=4&transport=polling&t=theb5mc8 HTTP/1.1" 200 -
+2024-09-24 21:16:13,350 - root - INFO - Client connected: L5GNgvRKSVApHdy6AAAB
+2024-09-24 21:16:13,351 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:16:13] "POST /socket.io/?EIO=4&transport=polling&t=thfhd4bl&sid=_F3aPS7LmclclBk-AAAA HTTP/1.1" 200 -
+2024-09-24 21:16:13,458 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:16:13] "GET /socket.io/?EIO=4&transport=polling&t=thfkar1h&sid=_F3aPS7LmclclBk-AAAA HTTP/1.1" 200 -
+2024-09-24 21:16:13,480 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:16:13] "GET /socket.io/?EIO=4&transport=polling&t=thfkwrhj&sid=_F3aPS7LmclclBk-AAAA HTTP/1.1" 200 -
+2024-09-24 21:16:13,494 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:16:13] "GET /socket.io/?EIO=4&transport=polling&t=thfldbgr&sid=_F3aPS7LmclclBk-AAAA HTTP/1.1" 200 -
+2024-09-24 21:18:46,502 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:18:46,503 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:18:46,516 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:18:46,516 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:18:46,520 - app.factory - INFO - App startup
+2024-09-24 21:18:47,100 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-09-24 21:18:47,100 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-09-24 21:18:47,183 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:18:47] "GET /socket.io/?EIO=4&transport=polling&t=tknlhw3g HTTP/1.1" 200 -
+2024-09-24 21:18:47,196 - root - INFO - Client connected: hMoyZ45Ng-b9h4N7AAAB
+2024-09-24 21:18:47,196 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:18:47] "POST /socket.io/?EIO=4&transport=polling&t=tkq6v16i&sid=xDyoye_hwje2-EpXAAAA HTTP/1.1" 200 -
+2024-09-24 21:18:47,238 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:18:47] "GET /socket.io/?EIO=4&transport=polling&t=tkq8240o&sid=xDyoye_hwje2-EpXAAAA HTTP/1.1" 200 -
+2024-09-24 21:18:47,241 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:18:47] "GET /socket.io/?EIO=4&transport=polling&t=tkq878e1&sid=xDyoye_hwje2-EpXAAAA HTTP/1.1" 200 -
+2024-09-24 21:25:05,462 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:25:05,463 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:25:05,574 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:25:05,574 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:25:05,592 - app.factory - INFO - App startup
+2024-09-24 21:25:16,300 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-09-24 21:25:16,300 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-09-24 21:25:17,459 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:25:17] "GET /socket.io/?EIO=4&transport=polling&t=tt38sgx3 HTTP/1.1" 200 -
+2024-09-24 21:25:17,486 - root - INFO - Client connected: t-Tv8iDNA9KIE1qPAAAB
+2024-09-24 21:25:17,487 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:25:17] "POST /socket.io/?EIO=4&transport=polling&t=tt3c5p1x&sid=Pl9RxriPR8-s3DQHAAAA HTTP/1.1" 200 -
+2024-09-24 21:25:17,523 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:25:17] "GET /socket.io/?EIO=4&transport=polling&t=tt3cbli8&sid=Pl9RxriPR8-s3DQHAAAA HTTP/1.1" 200 -
+2024-09-24 21:25:17,536 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:25:17] "GET /socket.io/?EIO=4&transport=polling&t=tt3dlvbi&sid=Pl9RxriPR8-s3DQHAAAA HTTP/1.1" 200 -
+2024-09-24 21:26:08,688 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:08] "OPTIONS /api/login HTTP/1.1" 200 -
+2024-09-24 21:26:09,713 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:09] "POST /api/login HTTP/1.1" 200 -
+2024-09-24 21:26:09,868 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:09] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:26:09,886 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:09] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:26:09,891 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:09] "OPTIONS /api/patients?page=1&limit=1 HTTP/1.1" 200 -
+2024-09-24 21:26:09,907 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:09] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:26:09,926 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:09] "OPTIONS /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:26:09,929 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:09] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:26:09,941 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:09] "OPTIONS /api/patients?page=1&limit=1 HTTP/1.1" 200 -
+2024-09-24 21:26:09,957 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:09] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:26:09,963 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:09] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:26:09,974 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:09] "OPTIONS /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:26:09,988 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:09] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:26:10,034 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:10] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:26:10,072 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:10] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:26:10,103 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:10] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:26:10,139 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:10] "GET /api/patients?page=1&limit=1 HTTP/1.1" 200 -
+2024-09-24 21:26:10,180 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:10] "GET /api/patients?page=1&limit=1 HTTP/1.1" 200 -
+2024-09-24 21:26:10,395 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:10] "GET /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:26:10,417 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:10] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:26:10,420 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:10] "GET /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:26:19,951 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:19] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:26:23,567 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:23] "OPTIONS /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:26:23,572 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:23] "OPTIONS /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:26:23,766 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:23] "GET /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:26:23,892 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:23] "GET /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:26:28,145 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:26:28,151 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:26:28,207 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:26:28,249 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:26:28,265 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:26:28,273 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:26:28,283 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:26:28,287 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:26:28,293 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:26:28,308 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:26:28,329 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:26:28,335 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:26:28,347 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:26:28,358 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/4 HTTP/1.1" 200 -
+2024-09-24 21:26:28,361 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:26:28,369 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:26:28,374 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:26:28,384 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:26:28,390 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:26:28,397 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:26:28,414 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:26:28,430 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:26:28,434 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:26:28,442 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:26:28,445 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/4 HTTP/1.1" 200 -
+2024-09-24 21:26:28,474 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:26:28,498 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:26:28,499 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:26:28,502 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:26:28,509 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:26:28,531 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:26:28,537 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:26:28,541 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "OPTIONS /api/visits/4 HTTP/1.1" 200 -
+2024-09-24 21:26:28,574 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:26:28,580 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:26:28,608 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:26:28,611 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/4 HTTP/1.1" 200 -
+2024-09-24 21:26:28,640 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:26:28,668 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:26:28,681 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:26:28,701 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:26:28,711 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:26:28,747 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:26:28,748 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:26:28,790 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:26:28,804 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:26:28,812 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:26:28,815 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:26:28,871 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:26:28,892 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:26:28,898 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:26:28,903 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:26:28,928 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:26:28,958 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:26:28,991 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:28] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:26:29,020 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:29] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:26:29,124 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:29] "GET /api/visits/4 HTTP/1.1" 200 -
+2024-09-24 21:26:29,144 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:29] "GET /api/visits/4 HTTP/1.1" 200 -
+2024-09-24 21:26:32,524 - root - INFO - Client t-Tv8iDNA9KIE1qPAAAB joined room: PID08
+2024-09-24 21:26:32,534 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:32] "OPTIONS /api/visits/13/image-count HTTP/1.1" 200 -
+2024-09-24 21:26:32,562 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:26:32] "GET /api/visits/13/image-count HTTP/1.1" 200 -
+2024-09-24 21:26:35,420 - root - INFO - Client t-Tv8iDNA9KIE1qPAAAB left room: PID08
+2024-09-24 21:27:12,994 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:12] "OPTIONS /api/login HTTP/1.1" 200 -
+2024-09-24 21:27:13,118 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "POST /api/login HTTP/1.1" 200 -
+2024-09-24 21:27:13,191 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:27:13,193 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "OPTIONS /api/patients?page=1&limit=1 HTTP/1.1" 200 -
+2024-09-24 21:27:13,196 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:27:13,200 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:27:13,202 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "OPTIONS /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:27:13,211 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:27:13,216 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "OPTIONS /api/patients?page=1&limit=1 HTTP/1.1" 200 -
+2024-09-24 21:27:13,218 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:27:13,220 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:27:13,226 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "OPTIONS /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:27:13,229 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:27:13,237 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:27:13,244 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "GET /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:27:13,247 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:27:13,249 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "GET /api/patients?page=1&limit=1 HTTP/1.1" 200 -
+2024-09-24 21:27:13,257 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "GET /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:27:13,260 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:27:13,265 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:27:13,277 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:13] "GET /api/patients?page=1&limit=1 HTTP/1.1" 200 -
+2024-09-24 21:27:15,514 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:15] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:27:26,457 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:26] "OPTIONS /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:27:26,464 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:26] "OPTIONS /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:27:26,506 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:26] "GET /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:27:26,557 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:27:26] "GET /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:28:39,177 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:39] "OPTIONS /api/patients HTTP/1.1" 200 -
+2024-09-24 21:28:39,214 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:39] "[35m[1mPOST /api/patients HTTP/1.1[0m" 201 -
+2024-09-24 21:28:45,228 - root - INFO - Client disconnected: t-Tv8iDNA9KIE1qPAAAB
+2024-09-24 21:28:45,230 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:45] "GET /socket.io/?EIO=4&transport=websocket&sid=Pl9RxriPR8-s3DQHAAAA HTTP/1.1" 200 -
+2024-09-24 21:28:45,813 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:45] "GET /socket.io/?EIO=4&transport=polling&t=txjwb9s4 HTTP/1.1" 200 -
+2024-09-24 21:28:45,994 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:45] "OPTIONS /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:28:46,119 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "OPTIONS /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:28:46,133 - root - INFO - Client connected: YX8j62jCxz_rlvM9AAAD
+2024-09-24 21:28:46,145 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "POST /socket.io/?EIO=4&transport=polling&t=txk3dvhv&sid=QbwKO2k0Yxd3WrKKAAAC HTTP/1.1" 200 -
+2024-09-24 21:28:46,158 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "GET /socket.io/?EIO=4&transport=polling&t=txk3p4ut&sid=QbwKO2k0Yxd3WrKKAAAC HTTP/1.1" 200 -
+2024-09-24 21:28:46,175 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "GET /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:28:46,270 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "GET /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:28:46,331 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:28:46,448 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "OPTIONS /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:28:46,588 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:28:46,603 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "OPTIONS /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:28:46,617 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "GET /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:28:46,620 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:28:46,846 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "GET /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:28:46,851 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:28:46,979 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:28:46,984 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "GET /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:28:46,999 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:46] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:28:47,089 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:47] "GET /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:28:57,329 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:57] "OPTIONS /api/patients?page=2&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:28:57,353 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:28:57] "GET /api/patients?page=2&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:30:42,948 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:30:42] "OPTIONS /api/patients/PID11 HTTP/1.1" 200 -
+2024-09-24 21:30:42,974 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:30:42] "GET /api/patients/PID11 HTTP/1.1" 200 -
+2024-09-24 21:30:49,475 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:30:49] "OPTIONS /api/patients/PID11 HTTP/1.1" 200 -
+2024-09-24 21:30:49,504 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:30:49] "PUT /api/patients/PID11 HTTP/1.1" 200 -
+2024-09-24 21:31:16,101 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:31:16,114 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:31:16,429 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "GET /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:31:16,451 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:31:16,467 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "GET /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:31:16,479 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:31:16,485 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:31:16,512 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:31:16,520 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:31:16,548 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:31:16,558 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:31:16,566 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:31:16,669 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:31:16,677 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/4 HTTP/1.1" 200 -
+2024-09-24 21:31:16,679 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:31:16,685 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:31:16,687 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:31:16,692 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:31:16,694 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:31:16,698 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:31:16,702 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:31:16,704 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:31:16,708 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:31:16,712 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/4 HTTP/1.1" 200 -
+2024-09-24 21:31:16,725 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:31:16,728 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:31:16,740 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:31:16,749 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:31:16,759 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:31:16,767 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:31:16,775 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:31:16,799 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:31:16,803 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:31:16,920 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "OPTIONS /api/visits/4 HTTP/1.1" 200 -
+2024-09-24 21:31:16,930 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:31:16,941 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:31:16,949 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:16] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:31:17,079 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:31:17,100 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:31:17,117 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:31:17,262 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:31:17,293 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:31:17,326 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/4 HTTP/1.1" 200 -
+2024-09-24 21:31:17,347 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:31:17,367 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:31:17,391 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:31:17,403 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:31:17,434 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:31:17,458 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:31:17,463 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:31:17,469 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:31:17,579 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:31:17,580 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/4 HTTP/1.1" 200 -
+2024-09-24 21:31:17,597 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:31:17,608 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:31:17,613 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:31:17,619 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:31:17,727 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:31:17,751 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:31:17,778 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:31:17,792 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:31:17,812 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:31:17,827 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:31:17] "GET /api/visits/4 HTTP/1.1" 200 -
+2024-09-24 21:32:59,091 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:32:59] "OPTIONS /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:32:59,093 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:32:59] "OPTIONS /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:32:59,427 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:32:59] "GET /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:32:59,892 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:32:59] "GET /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:33:02,835 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:33:02] "OPTIONS /api/patients?page=2&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:33:02,856 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:33:02] "GET /api/patients?page=2&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:33:05,217 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:33:05] "OPTIONS /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:33:05,378 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:33:05] "GET /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:33:13,623 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:33:13] "OPTIONS /api/patients?page=2&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:33:13,725 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:33:13] "GET /api/patients?page=2&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:34:23,040 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:23] "OPTIONS /api/patients/PID11/visits HTTP/1.1" 200 -
+2024-09-24 21:34:23,141 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:23] "[35m[1mPOST /api/patients/PID11/visits HTTP/1.1[0m" 201 -
+2024-09-24 21:34:23,155 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:23] "OPTIONS /api/patients?page=2&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:34:23,173 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:23] "GET /api/patients?page=2&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:34:41,013 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:34:41,016 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:34:41,042 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:34:41,150 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:34:41,164 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:34:41,167 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:34:41,182 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:34:41,185 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:34:41,198 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:34:41,199 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:34:41,217 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:34:41,231 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:34:41,241 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:34:41,247 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:34:41,266 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:34:41,276 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:34:41,284 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:34:41,292 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:34:41,302 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:34:41,318 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:34:41,333 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:34:41,345 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:34:41,359 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:34:41,378 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:34:41,412 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:34:41,428 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:34:41,448 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:34:41,479 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:34:41,513 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:34:41,516 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:34:41,523 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:34:41,542 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:34:41,551 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:34:41,562 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:34:41,582 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:34:41,608 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:34:41,622 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:34:41,640 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:34:41,660 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:34:41,678 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:34:41,719 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:34:41,744 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:34:41,766 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:34:41,773 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:34:41,788 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:34:41,811 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:34:41,827 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:34:41,852 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:34:41,871 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:34:41,978 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:41] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:34:42,011 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:42] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:34:42,013 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:42] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:34:42,026 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:42] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:34:42,026 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:42] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:34:42,035 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:42] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:34:42,091 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:42] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:34:42,135 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:42] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:34:42,141 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:34:42] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:35:03,907 - root - INFO - Client YX8j62jCxz_rlvM9AAAD joined room: PID11
+2024-09-24 21:35:03,910 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:35:03] "OPTIONS /api/visits/16/image-count HTTP/1.1" 200 -
+2024-09-24 21:35:03,920 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:35:03] "GET /api/visits/16/image-count HTTP/1.1" 200 -
+2024-09-24 21:36:36,568 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:36:36] "OPTIONS /api/visits/16/images HTTP/1.1" 200 -
+2024-09-24 21:36:36,622 - root - INFO - Processing image: pat4_001.jpg, image/jpeg, 0
+2024-09-24 21:36:36,634 - root - INFO - Successfully processed and saved image: pat4_001.jpg
+2024-09-24 21:36:36,635 - root - INFO - Processing image: pat4_002.jpg, image/jpeg, 0
+2024-09-24 21:36:36,641 - root - INFO - Successfully processed and saved image: pat4_002.jpg
+2024-09-24 21:36:36,642 - root - INFO - Processing image: pat4_003.jpg, image/jpeg, 0
+2024-09-24 21:36:36,652 - root - INFO - Successfully processed and saved image: pat4_003.jpg
+2024-09-24 21:36:36,652 - root - INFO - Processing image: pat4_004.jpg, image/jpeg, 0
+2024-09-24 21:36:36,660 - root - INFO - Successfully processed and saved image: pat4_004.jpg
+2024-09-24 21:36:36,660 - root - INFO - Processing image: pat4_005.jpg, image/jpeg, 0
+2024-09-24 21:36:36,761 - root - INFO - Successfully processed and saved image: pat4_005.jpg
+2024-09-24 21:36:36,796 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:36:36] "[35m[1mPOST /api/visits/16/images HTTP/1.1[0m" 201 -
+2024-09-24 21:36:36,808 - root - INFO - Client YX8j62jCxz_rlvM9AAAD left room: PID11
+2024-09-24 21:36:36,810 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:36:36] "OPTIONS /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:36:36,812 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:36:36] "OPTIONS /api/visits/16/initiate-diagnosis HTTP/1.1" 200 -
+2024-09-24 21:36:36,830 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:36:36] "GET /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:36:43,288 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:36:43] "[35m[1mPOST /api/visits/16/initiate-diagnosis HTTP/1.1[0m" 202 -
+2024-09-24 21:36:48,584 - root - INFO - Client YX8j62jCxz_rlvM9AAAD joined room: PID11
+2024-09-24 21:36:48,586 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:36:48] "OPTIONS /api/visits/16/image-count HTTP/1.1" 200 -
+2024-09-24 21:36:48,598 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:36:48] "GET /api/visits/16/image-count HTTP/1.1" 200 -
+2024-09-24 21:36:50,668 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:36:50] "OPTIONS /api/visits/16/initiate-diagnosis HTTP/1.1" 200 -
+2024-09-24 21:36:52,773 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:36:52] "[35m[1mPOST /api/visits/16/initiate-diagnosis HTTP/1.1[0m" 202 -
+2024-09-24 21:37:13,325 - root - INFO - Client YX8j62jCxz_rlvM9AAAD left room: PID11
+2024-09-24 21:37:27,958 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:37:27] "OPTIONS /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:37:27,972 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:37:27] "OPTIONS /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:37:30,073 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:37:30] "GET /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:37:30,122 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:37:30] "GET /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:37:33,160 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:37:33] "OPTIONS /api/patients?page=2&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:37:33,177 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:37:33] "GET /api/patients?page=2&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:37:36,619 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:37:36] "OPTIONS /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:37:36,667 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:37:36] "GET /api/patients?page=1&limit=10&status=all&search= HTTP/1.1" 200 -
+2024-09-24 21:41:47,020 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:41:47,030 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:41:47,171 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:41:47,301 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:41:47,306 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:41:47,318 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:41:47,330 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:41:47,334 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:41:47,339 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:41:47,349 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:41:47,356 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:41:47,362 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:41:47,367 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:41:47,371 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:41:47,374 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:41:47,383 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:41:47,387 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:41:47,395 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:41:47,401 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:41:47,406 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:41:47,415 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:41:47,419 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:41:47,421 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:41:47,428 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:41:47,449 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:41:47,454 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:41:47,465 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:41:47,466 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:41:47,473 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:41:47,498 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:41:47,502 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:41:47,506 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:41:47,515 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:41:47,523 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:41:47,547 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:41:47,559 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:41:47,568 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:41:47,571 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:41:47,590 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:41:47,601 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:41:47,606 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:41:47,723 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:41:47,844 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:41:47,851 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:41:47,854 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:41:47,876 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:41:47,876 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:41:47,882 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:41:47,893 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:41:47,901 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:41:47,907 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:41:47,921 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:41:47,929 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:41:47,933 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:41:47,945 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:41:47,958 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:41:47,963 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:41:47,967 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:41:47] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:44:42,618 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:44:42,618 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:44:42,621 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:44:42,621 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:44:42,625 - app.factory - INFO - App startup
+2024-09-24 21:44:47,923 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:44:47,923 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:44:47,924 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:44:47,925 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:44:47,931 - app.factory - INFO - App startup
+2024-09-24 21:44:47,938 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:44:47,938 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:44:47,939 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:44:47,942 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:44:47,947 - app.factory - INFO - App startup
+2024-09-24 21:44:47,995 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:44:47,995 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:44:47,995 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:44:47,997 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:44:48,001 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:44:48,001 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:44:48,001 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:44:48,003 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:44:48,005 - app.factory - INFO - App startup
+2024-09-24 21:44:48,011 - app.factory - INFO - App startup
+2024-09-24 21:44:52,573 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:44:52,573 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:44:52,574 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:44:52,575 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:44:52,578 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:44:52,578 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:44:52,579 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:44:52,581 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:44:52,581 - app.factory - INFO - App startup
+2024-09-24 21:44:52,586 - app.factory - INFO - App startup
+2024-09-24 21:44:52,591 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:44:52,591 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:44:52,592 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:44:52,594 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:44:52,600 - app.factory - INFO - App startup
+2024-09-24 21:44:52,614 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:44:52,614 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:44:52,615 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:44:52,617 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:44:52,625 - app.factory - INFO - App startup
+2024-09-24 21:45:00,268 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:45:00,268 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:45:00,269 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:45:00,272 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:45:00,282 - app.factory - INFO - App startup
+2024-09-24 21:45:01,011 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:45:01,012 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:45:01,012 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:45:01,014 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:45:01,023 - app.factory - INFO - App startup
+2024-09-24 21:45:01,734 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:45:01,734 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:45:01,734 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:45:01,737 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:45:01,746 - app.factory - INFO - App startup
+2024-09-24 21:45:01,774 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:45:01,775 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:45:01,775 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:45:01,778 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:45:01,787 - app.factory - INFO - App startup
+2024-09-24 21:45:07,309 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:45:07,309 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:45:07,309 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:45:07,311 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:45:07,320 - app.factory - INFO - App startup
+2024-09-24 21:45:07,633 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:45:07,633 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:45:07,633 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:45:07,635 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:45:07,640 - app.factory - INFO - App startup
+2024-09-24 21:45:07,990 - app.celery_config - INFO - Dummy Flask app created for Celery configuration
+2024-09-24 21:45:07,990 - app.celery_config - INFO - Creating Celery app
+2024-09-24 21:45:07,991 - app.celery_config - INFO - Celery app created successfully
+2024-09-24 21:45:07,993 - app.celery_config - INFO - Celery instance created and configured
+2024-09-24 21:45:08,002 - app.factory - INFO - App startup
+2024-09-24 21:48:58,259 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:48:58] "OPTIONS /api/visits/16/image-count HTTP/1.1" 200 -
+2024-09-24 21:48:58,260 - root - INFO - Client YX8j62jCxz_rlvM9AAAD joined room: PID11
+2024-09-24 21:48:58,280 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:48:58] "[31m[1mGET /api/visits/16/image-count HTTP/1.1[0m" 401 -
+2024-09-24 21:48:58,307 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:48:58] "[31m[1mGET /api/visits/16/image-count HTTP/1.1[0m" 401 -
+2024-09-24 21:49:01,698 - root - INFO - Client YX8j62jCxz_rlvM9AAAD left room: PID11
+2024-09-24 21:49:06,035 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "OPTIONS /api/login HTTP/1.1" 200 -
+2024-09-24 21:49:06,504 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "POST /api/login HTTP/1.1" 200 -
+2024-09-24 21:49:06,699 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:49:06,709 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "OPTIONS /api/patients?page=1&limit=1 HTTP/1.1" 200 -
+2024-09-24 21:49:06,713 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:49:06,724 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:49:06,726 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "OPTIONS /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:49:06,737 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:49:06,822 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "OPTIONS /api/patients?page=1&limit=1 HTTP/1.1" 200 -
+2024-09-24 21:49:06,826 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "OPTIONS /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:49:06,834 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:49:06,842 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "OPTIONS /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:49:06,850 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:49:06,983 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "GET /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:49:06,989 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "GET /api/patients?page=1&limit=1 HTTP/1.1" 200 -
+2024-09-24 21:49:06,991 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:06] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:49:07,010 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:07] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:49:07,011 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:07] "GET /api/user/profile HTTP/1.1" 200 -
+2024-09-24 21:49:07,021 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:07] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:49:07,022 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:07] "GET /api/patients?page=1&limit=1 HTTP/1.1" 200 -
+2024-09-24 21:49:07,098 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:07] "GET /api/notifications HTTP/1.1" 200 -
+2024-09-24 21:49:08,925 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:08] "[33mOPTIONS /api/dashboard/stats HTTP/1.1[0m" 404 -
+2024-09-24 21:49:21,643 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:49:21,649 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:49:21,666 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "GET /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:49:21,685 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:49:21,686 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:49:21,694 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "GET /api/patients/with-visits HTTP/1.1" 200 -
+2024-09-24 21:49:21,700 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:49:21,714 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:49:21,718 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:49:21,733 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:49:21,742 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:49:21,753 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:49:21,760 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:49:21,768 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:49:21,770 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:49:21,775 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:49:21,784 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:49:21,788 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:49:21,803 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:49:21,879 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:49:21,882 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:49:21,885 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:49:21,895 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:49:21,898 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:49:21,919 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:49:21,921 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "GET /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:49:21,925 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:49:21,957 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:49:21,965 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:49:21,975 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:49:21,985 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:49:21,995 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:21] "OPTIONS /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:49:22,005 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "OPTIONS /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:49:22,038 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:49:22,050 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:49:22,079 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:49:22,131 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:49:22,162 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:49:22,163 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:49:22,206 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:49:22,261 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:49:22,263 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:49:22,298 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:49:22,301 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:49:22,319 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:49:22,337 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:49:22,347 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:49:22,371 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:49:22,385 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:49:22,408 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:49:22,410 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:49:22,439 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/16 HTTP/1.1" 200 -
+2024-09-24 21:49:22,441 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/15 HTTP/1.1" 200 -
+2024-09-24 21:49:22,467 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/14 HTTP/1.1" 200 -
+2024-09-24 21:49:22,483 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/13 HTTP/1.1" 200 -
+2024-09-24 21:49:22,501 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/12 HTTP/1.1" 200 -
+2024-09-24 21:49:22,516 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/11 HTTP/1.1" 200 -
+2024-09-24 21:49:22,586 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/9 HTTP/1.1" 200 -
+2024-09-24 21:49:22,590 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/10 HTTP/1.1" 200 -
+2024-09-24 21:49:22,591 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/6 HTTP/1.1" 200 -
+2024-09-24 21:49:22,601 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:22] "GET /api/visits/5 HTTP/1.1" 200 -
+2024-09-24 21:49:30,964 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:30] "OPTIONS /api/visits/16/image-count HTTP/1.1" 200 -
+2024-09-24 21:49:30,966 - root - INFO - Client YX8j62jCxz_rlvM9AAAD joined room: PID11
+2024-09-24 21:49:30,975 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:30] "GET /api/visits/16/image-count HTTP/1.1" 200 -
+2024-09-24 21:49:33,130 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:33] "OPTIONS /api/visits/16/initiate-diagnosis HTTP/1.1" 200 -
+2024-09-24 21:49:33,182 - werkzeug - INFO - 127.0.0.1 - - [24/Sep/2024 21:49:33] "[35m[1mPOST /api/visits/16/initiate-diagnosis HTTP/1.1[0m" 202 -

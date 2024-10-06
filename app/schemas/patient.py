@@ -9,6 +9,8 @@ class PatientSchema(SQLAlchemyAutoSchema):
         load_instance = True
         include_relationships = True
         include_fk = True
+        exclude = ('search_vector',)  # Exclude the TSVECTOR field
+
 
     patient_id = fields.String(dump_only=True)  # Exclude from input, only include in output
 
