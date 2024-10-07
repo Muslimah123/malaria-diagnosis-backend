@@ -45,6 +45,10 @@ from flask_limiter.util import get_remote_address
 import secrets
 from .utils import optimize_query, monitor_query_performance, cache_query, create_materialized_view
 from .database_management import refresh_patient_summary_view
+from sqlalchemy.sql import text
+import psycopg2
+
+
 
 
 api = Blueprint('api', __name__)
@@ -572,112 +576,139 @@ def user_profile():
 def create_patient():
     data = request.get_json()
     try:
+        # Create the patient
         new_patient = patient_schema.load(data, session=db.session, unknown=EXCLUDE)
         db.session.add(new_patient)
         db.session.commit()
-        # Update search vector for the new patient
-        db.session.execute(text(f"""
-            UPDATE patients
-            SET search_vector = to_tsvector('english', 
-                coalesce(name, '') || ' ' || 
-                coalesce(email, '') || ' ' || 
-                coalesce(address, '') || ' ' || 
-                coalesce(cast(age as text), '') || ' ' || 
-                coalesce(gender, '')
-            )
-            WHERE patient_id = '{new_patient.patient_id}'
-        """))
-        db.session.commit()
-        # Create notification for doctors
-        admin_users = User.query.filter_by(role='admin').all()
-        for admin in admin_users:
-            create_notification(admin.user_id, f"New patient registered: {new_patient.name}")
+
+        # Attempt to update search vector
+        try:
+            db.session.execute(text(f"""
+                UPDATE patients
+                SET search_vector = to_tsvector('english', 
+                    coalesce(name, '') || ' ' ||
+                    coalesce(email, '') || ' ' ||
+                    coalesce(address, '') || ' ' ||
+                    coalesce(cast(age as text), '') || ' ' ||
+                    coalesce(gender::text, 'unknown')  -- Adjust 'unknown' to your valid gender enum
+                )
+                WHERE patient_id = '{new_patient.patient_id}'
+            """))
+            db.session.commit()
+        except Exception as e:
+            logging.error(f"Failed to update search vector: {str(e)}")
+            # Optionally rollback only if this specific query fails
+            db.session.rollback()
+
+        # Attempt to create notifications for admins
+        try:
+            admin_users = User.query.filter_by(role='admin').all()
+            for admin in admin_users:
+                create_notification(admin.user_id, f"New patient registered: {new_patient.name}")
+        except Exception as e:
+            logging.error(f"Failed to create notification: {str(e)}")
+
         return jsonify({'message': 'Patient created successfully!', 'patient': patient_schema.dump(new_patient)}), 201
+    
     except ValidationError as err:
         return jsonify(err.messages), 400
     except Exception as e:
         db.session.rollback()
+        logging.error(f"An error occurred during patient creation: {str(e)}")
         return jsonify({'message': 'An error occurred', 'error': str(e)}), 500
+
 @api.route('/patients/search', methods=['GET'])
 @jwt_required()
 def search_patients_route():
     query = request.args.get('query', '')
     patients = search_patients(query)
     return jsonify(patients_schema.dump(patients)), 200
-# @api.route('/patients', methods=['GET'])
-# @jwt_required()
-# def get_patients():
-#     page = request.args.get('page', 1, type=int)
-#     per_page = request.args.get('limit', 10, type=int)
 
-#     patients_query = Patient.query
 
-#     patients_page = patients_query.paginate(page=page, per_page=per_page, error_out=False)
-
-#     patients_data = []
-#     for patient in patients_page.items:
-#         patient_dict = patient_schema.dump(patient)
-#         latest_visit = Visit.query.filter_by(patient_id=patient.patient_id).order_by(Visit.visit_date.desc()).first()
-#         if latest_visit:
-#             latest_diagnosis = DiagnosisResult.query.filter_by(visit_id=latest_visit.visit_id).order_by(DiagnosisResult.result_date.desc()).first()
-#             if latest_diagnosis:
-#                 patient_dict['status'] = latest_diagnosis.status
-#             else:
-#                 patient_dict['status'] = 'pending'
-#         else:
-#             patient_dict['status'] = 'no_visit'
-#         patients_data.append(patient_dict)
-
-#     return jsonify({
-#         'patients': patients_data,
-#         'totalPages': patients_page.pages,
-#         'page': page,
-#         'per_page': per_page,
-#         'total': patients_page.total
-#     })
 @api.route('/patients', methods=['GET'])
 @jwt_required()
 @monitor_query_performance
-@cache_query
 def get_patients():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('limit', 10, type=int)
+    status_filter = request.args.get('status', 'all')
+    search_term = request.args.get('search', '')
 
-    # Refresh the materialized view (you might want to do this on a schedule instead of every request)
-    refresh_materialized_view('patient_summary')
+    logging.info(f"Fetching patients for page {page} with limit {per_page}, status: {status_filter}, search: {search_term}")
 
-    query = f"""
-    SELECT * FROM patient_summary
-    ORDER BY created_at DESC
-    LIMIT {per_page} OFFSET {(page - 1) * per_page}
-    """
+    try:
+        # Refresh the materialized view (if needed)
+        refresh_patient_summary_view()
 
-    optimized_query = optimize_query(query)
-    result = db.session.execute(text(optimized_query))
+        # Construct the query with optional filtering and searching
+        query = f"""
+        SELECT patient_id, name, email, age, gender, address, created_at, latest_visit_id, latest_diagnosis_status
+        FROM patient_summary
+        WHERE 1 = 1
+        """
 
-    patients_data = []
-    for row in result:
-        patient_dict = dict(row)
-        if patient_dict['latest_visit_id']:
-            if patient_dict['latest_diagnosis_status']:
-                patient_dict['status'] = patient_dict['latest_diagnosis_status']
-            else:
-                patient_dict['status'] = 'pending'
-        else:
-            patient_dict['status'] = 'no_visit'
-        patients_data.append(patient_dict)
+        # Apply search term filter if provided
+        if search_term:
+            query += f" AND (name ILIKE '%{search_term}%' OR email ILIKE '%{search_term}%')"
 
-    # Get total count for pagination
-    total_count = db.session.execute(text("SELECT COUNT(*) FROM patient_summary")).scalar()
-    total_pages = (total_count + per_page - 1) // per_page
+        # Apply status filter if provided and not 'all'
+        if status_filter != 'all':
+            query += f" AND latest_diagnosis_status = '{status_filter}'"
 
-    return jsonify({
-        'patients': patients_data,
-        'totalPages': total_pages,
-        'page': page,
-        'per_page': per_page,
-        'total': total_count
-    })
+        # Add pagination and ordering
+        query += f" ORDER BY created_at DESC LIMIT {per_page} OFFSET {(page - 1) * per_page}"
+
+        logging.info(f"Executing query with search and filter: {query}")
+        
+        result = db.session.execute(text(query))
+
+        patients_data = []
+        for row in result:
+            patient_dict = {
+                'patient_id': row[0],
+                'name': row[1],
+                'email': row[2],
+                'age': row[3],
+                'gender': row[4],
+                'address': row[5],
+                'created_at': row[6],
+                'latest_visit_id': row[7],
+                'status': row[8] if row[8] else 'pending'
+            }
+
+            if not row[7]:
+                patient_dict['status'] = 'no_visit'
+            
+            patients_data.append(patient_dict)
+
+        logging.info(f"Query returned {len(patients_data)} rows for page {page}")
+
+        # Get total count for pagination without the limit and offset
+        count_query = """
+        SELECT COUNT(*) 
+        FROM patient_summary
+        WHERE 1 = 1
+        """
+        if search_term:
+            count_query += f" AND (name ILIKE '%{search_term}%' OR email ILIKE '%{search_term}%')"
+        if status_filter != 'all':
+            count_query += f" AND latest_diagnosis_status = '{status_filter}'"
+        
+        total_count = db.session.execute(text(count_query)).scalar()
+        total_pages = (total_count + per_page - 1) // per_page
+
+        return jsonify({
+            'patients': patients_data,
+            'totalPages': total_pages,
+            'page': page,
+            'per_page': per_page,
+            'total': total_count
+        })
+
+    except Exception as e:
+        logging.error(f"Error fetching patients: {e}")
+        return jsonify({"error": "Failed to fetch patients."}), 500
+
 @api.route('/patients/<string:patient_id>', methods=['GET'])
 @jwt_required()
 def get_patient(patient_id):
@@ -737,19 +768,40 @@ def update_patient(patient_id):
     print(f"Received update request for patient {patient_id}")
 
     data = request.get_json()
+    print(f"Received data for update: {data}")
+
+    # Remove patient_id from the data if it exists
+    data.pop('patient_id', None)
 
     # Fetch the patient from the database
     patient = Patient.query.get_or_404(patient_id)
 
     try:
-        # Use the schema to deserialize and validate the input data
-        updated_patient = patient_schema.load(data, instance=patient, partial=True)
-        
-        # The schema has already updated the patient instance, so we just need to commit
+        # Ensure the schema is passed the session for deserialization
+        updated_patient = patient_schema.load(data, instance=patient, session=db.session, partial=True)
+        print(f"Deserialized and validated data: {updated_patient}")
+
+        # Commit the changes
         db.session.commit()
 
-        # Update only this patient's search vector instead of all patients
-        Patient.update_search_vectors()
+        # Update the search vector for the updated patient
+        db.session.execute(text(f"""
+            UPDATE patients
+            SET search_vector = to_tsvector('english', 
+                coalesce(name, '') || ' ' ||
+                coalesce(email, '') || ' ' ||
+                coalesce(address, '') || ' ' ||
+                coalesce(cast(age as text), '') || ' ' ||
+                coalesce(gender::text, 'unknown')
+            )
+            WHERE patient_id = '{patient_id}'
+        """))
+        db.session.commit()
+
+        # Notify admins of the update
+        admin_users = User.query.filter_by(role='admin').all()
+        for admin in admin_users:
+            create_notification(admin.user_id, f"Patient updated: {updated_patient.name}")
 
         # Return the updated patient data
         return jsonify({
@@ -759,23 +811,75 @@ def update_patient(patient_id):
 
     except ValidationError as e:
         db.session.rollback()
+        print(f"Validation error: {e.messages}")
         return jsonify({'message': 'Validation error', 'errors': e.messages}), 400
     except IntegrityError as e:
         db.session.rollback()
+        print(f"Integrity error: {str(e)}")
         return jsonify({'message': 'Database integrity error', 'error': str(e)}), 400
     except Exception as e:
         db.session.rollback()
-        print(f"Error updating patient: {str(e)}")  # Log the error
+        print(f"Error updating patient: {str(e)}")
         return jsonify({'message': 'An unexpected error occurred', 'error': str(e)}), 500
+
+
+
 @api.route('/patients/<string:patient_id>', methods=['DELETE'])
 @jwt_required()
 def delete_patient(patient_id):
     patient = Patient.query.filter_by(patient_id=patient_id).first()
     if not patient:
         return jsonify({'message': 'Patient not found'}), 404
-    db.session.delete(patient)
-    db.session.commit()
-    return jsonify({'message': 'Patient deleted successfully!'}),200
+
+    try:
+        # Delete the patient from the database
+        db.session.delete(patient)
+        db.session.commit()
+
+        # Notify admins of the deletion
+        admin_users = User.query.filter_by(role='admin').all()
+        for admin in admin_users:
+            create_notification(admin.user_id, f"Patient deleted: {patient.name}")
+
+        return jsonify({'message': 'Patient deleted successfully!'}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error deleting patient: {str(e)}")  # Log the error
+        return jsonify({'message': 'An unexpected error occurred', 'error': str(e)}), 500
+
+
+
+@api.route('/patients/influx', methods=['GET'])
+@jwt_required()
+def get_patient_influx():
+    try:
+        # Get the current date and 7 days before
+        today = datetime.now().date()
+        start_date = today - timedelta(days=6)
+
+        # Query to get the number of new patients per day over the past week
+        influx_query = db.session.execute(text("""
+            SELECT 
+                DATE(created_at) as day, 
+                COUNT(*) as new_patients
+            FROM patients
+            WHERE created_at >= :start_date AND created_at < :end_date
+            GROUP BY day
+            ORDER BY day
+        """), {'start_date': start_date, 'end_date': today + timedelta(days=1)})
+        
+        influx_data = [
+            {"day": str(row[0]), "new_patients": row[1]}
+            for row in influx_query
+        ]
+
+        return jsonify({"influx_data": influx_data}), 200
+
+    except Exception as e:
+        logging.error(f"Error fetching patient influx data: {e}")
+        return jsonify({"message": "An error occurred while fetching patient influx data"}), 500
+
 @api.route('/maintenance/create_next_year_partition', methods=['POST'])
 @jwt_required()
 def create_next_year_partition_route():
@@ -1080,53 +1184,13 @@ def delete_image(image_id):
     return jsonify({'message': 'Image deleted successfully!'})
 
 
-# @api.route('/dashboard/stats', methods=['GET'])
-# @jwt_required()
-# @cache_query
-# def get_dashboard_stats():
-#     # Total patients
-#     total_patients = Patient.query.count()
-    
-#     # Count pending results (images uploaded but no diagnosis results)
-#     pending_results = db.session.query(Image).outerjoin(DiagnosisResult).filter(DiagnosisResult.result_id == None).count()
-    
-#     # Get diagnosis distribution for aggregated results (where severity_level is not null)
-#     diagnosis_distribution = db.session.query(
-#         DiagnosisResult.status, 
-#         func.count(DiagnosisResult.status)
-#     ).filter(DiagnosisResult.severity_level != None)\
-#     .group_by(DiagnosisResult.status).all()
-    
-#     # Convert to dictionary
-#     distribution_dict = {status: count for status, count in diagnosis_distribution if status}
-    
-#     # Include pending results (patients with images but no results) under 'inconclusive'
-#     distribution_dict['inconclusive'] = distribution_dict.get('inconclusive', 0) + pending_results
-    
-#     # Count completed diagnoses (aggregated results with severity level)
-#     completed_diagnoses = db.session.query(DiagnosisResult).filter(DiagnosisResult.severity_level != None).count()
-    
-#     # Count new diagnoses from the past 24 hours
-#     yesterday = datetime.now() - timedelta(days=1)
-#     new_diagnoses = db.session.query(DiagnosisResult).filter(
-#         DiagnosisResult.created_at >= yesterday,
-#         DiagnosisResult.severity_level != None
-#     ).count()
-    
-#     return jsonify({
-#         'total_patients': total_patients,
-#         'pending_results': pending_results,
-#         'completed_diagnoses': completed_diagnoses,
-#         'new_diagnoses': new_diagnoses,
-#         'diagnosis_distribution': distribution_dict
-#     })
 @api.route('/dashboard/stats', methods=['GET'])
 @jwt_required()
 @cache_query
 @monitor_query_performance
 def get_dashboard_stats():
     yesterday = datetime.now() - timedelta(days=1)
-    
+
     query = f"""
     WITH 
     total_patients AS (
@@ -1166,14 +1230,47 @@ def get_dashboard_stats():
     optimized_query = optimize_query(query)
     result = db.session.execute(text(optimized_query)).fetchone()
 
-    stats = dict(result)
-    
+    # Log the result structure
+    logging.info(f'Result: {result}')
+
+    # # Convert result to dictionary by accessing the values directly
+    # if result:
+    #     stats = {
+    #         'total_patients': result[0],
+    #         'pending_results': result[1],
+    #         'completed_diagnoses': result[2],
+    #         'new_diagnoses': result[3],
+    #         'diagnosis_distribution': result[4],
+    #     }
+    # else:
+    #     return jsonify({"error": "No data found"}), 404
+     # Check if result is None or if certain values are None
+    if not result or any(value is None for value in result):
+        logging.error(f"Some values are None in the result: {result}")
+        return jsonify({"error": "No data found"}), 404
+
+    # Convert RowProxy to a dictionary
+    stats = {
+        'total_patients': result[0],
+        'pending_results': result[1],
+        'completed_diagnoses': result[2],
+        'new_diagnoses': result[3],
+        'diagnosis_distribution': result[4],
+    }
+
+    # Log the processed stats
+    logging.info(f"Processed Stats: {stats}")
+
     # Convert diagnosis_distribution from JSON to Python dict and add pending_results to 'inconclusive'
     diagnosis_distribution = stats['diagnosis_distribution'] or {}
+    if isinstance(diagnosis_distribution, str):
+        import json
+        diagnosis_distribution = json.loads(diagnosis_distribution)  # Convert from JSON string to dict if necessary
     diagnosis_distribution['inconclusive'] = diagnosis_distribution.get('inconclusive', 0) + stats['pending_results']
     stats['diagnosis_distribution'] = diagnosis_distribution
 
     return jsonify(stats)
+
 @api.route('/dashboard/chart-data', methods=['GET'])
 @jwt_required()
 def get_chart_data():
