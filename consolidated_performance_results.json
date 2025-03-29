@@ -1,0 +1,396 @@
+{
+  "Database Query Performance": [
+    {
+      "Query Type": "Patient Search",
+      "Before Optimization (ms)": 2.52,
+      "After Optimization (ms)": 2.9,
+      "Time Improvement (%)": -15.14,
+      "CPU Before (%)": 0,
+      "CPU After (%)": 0,
+      "CPU Improvement (%)": 0,
+      "Memory Diff (MB)": 0.0
+    },
+    {
+      "Query Type": "Dashboard Stats",
+      "Before Optimization (ms)": 1.71,
+      "After Optimization (ms)": 2.83,
+      "Time Improvement (%)": -65.66,
+      "CPU Before (%)": 0,
+      "CPU After (%)": 0,
+      "CPU Improvement (%)": 0,
+      "Memory Diff (MB)": -0.0
+    },
+    {
+      "Query Type": "Patient Summary",
+      "Before Optimization (ms)": 2.88,
+      "After Optimization (ms)": 1.42,
+      "Time Improvement (%)": 50.74,
+      "CPU Before (%)": 0,
+      "CPU After (%)": 0,
+      "CPU Improvement (%)": 0,
+      "Memory Diff (MB)": 0.0
+    }
+  ],
+  "Cache Effectiveness": [
+    {
+      "Cache Test": "Patient List Cache",
+      "First Run (ms)": 2.0,
+      "Avg Subsequent Runs (ms)": 0.8,
+      "Cache Speedup (%)": 60.0,
+      "Estimated Hit Ratio (%)": 60.0
+    },
+    {
+      "Cache Test": "Dashboard Stats Cache",
+      "First Run (ms)": 2.0,
+      "Avg Subsequent Runs (ms)": 0.8,
+      "Cache Speedup (%)": 59.94,
+      "Estimated Hit Ratio (%)": 59.94
+    },
+    {
+      "Cache Test": "Patient Search Cache",
+      "First Run (ms)": 6.77,
+      "Avg Subsequent Runs (ms)": 1.09,
+      "Cache Speedup (%)": 83.82,
+      "Estimated Hit Ratio (%)": 83.82
+    }
+  ],
+  "Data Scaling Performance": [
+    {
+      "Data Volume": 10,
+      "Before Response Time (ms)": 52.73,
+      "After Response Time (ms)": 35.21,
+      "Improvement (%)": 33.24,
+      "Before Memory (%)": 91.81,
+      "After Memory (%)": 91.8,
+      "Response Size (bytes)": 2152
+    },
+    {
+      "Data Volume": 25,
+      "Before Response Time (ms)": 32.33,
+      "After Response Time (ms)": 35.19,
+      "Improvement (%)": -8.83,
+      "Before Memory (%)": 91.84,
+      "After Memory (%)": 91.9,
+      "Response Size (bytes)": 3851
+    },
+    {
+      "Data Volume": 50,
+      "Before Response Time (ms)": 37.82,
+      "After Response Time (ms)": 33.98,
+      "Improvement (%)": 10.13,
+      "Before Memory (%)": 91.91,
+      "After Memory (%)": 92.0,
+      "Response Size (bytes)": 3851
+    },
+    {
+      "Data Volume": 100,
+      "Before Response Time (ms)": 47.44,
+      "After Response Time (ms)": 39.74,
+      "Improvement (%)": 16.23,
+      "Before Memory (%)": 92.1,
+      "After Memory (%)": 92.0,
+      "Response Size (bytes)": 3852
+    }
+  ],
+  "Memory Usage": [
+    {
+      "Operation": "Dashboard Loading",
+      "Baseline Memory (%)": 92.0,
+      "Avg Memory Usage (%)": 92.0,
+      "Peak Memory (%)": 92.0,
+      "Memory Impact (%)": 0.0
+    },
+    {
+      "Operation": "Patient Search",
+      "Baseline Memory (%)": 92.0,
+      "Avg Memory Usage (%)": 92.0,
+      "Peak Memory (%)": 92.0,
+      "Memory Impact (%)": 0.0
+    },
+    {
+      "Operation": "Pagination",
+      "Baseline Memory (%)": 92.0,
+      "Avg Memory Usage (%)": 92.0,
+      "Peak Memory (%)": 92.0,
+      "Memory Impact (%)": 0.0
+    }
+  ],
+  "Network Payload": [
+    {
+      "Operation": "Dashboard API",
+      "Optimized Size (bytes)": 158,
+      "Estimated Unoptimized (bytes)": 197,
+      "Size Reduction (%)": 19.8,
+      "Content-Type": "application/json",
+      "Compressed": false
+    },
+    {
+      "Operation": "Patient List (10)",
+      "Optimized Size (bytes)": 2152,
+      "Estimated Unoptimized (bytes)": 2690,
+      "Size Reduction (%)": 20.0,
+      "Content-Type": "application/json",
+      "Compressed": false
+    },
+    {
+      "Operation": "Patient List (50)",
+      "Optimized Size (bytes)": 3851,
+      "Estimated Unoptimized (bytes)": 4813,
+      "Size Reduction (%)": 19.99,
+      "Content-Type": "application/json",
+      "Compressed": false
+    },
+    {
+      "Operation": "Search Results",
+      "Optimized Size (bytes)": 265,
+      "Estimated Unoptimized (bytes)": 331,
+      "Size Reduction (%)": 19.94,
+      "Content-Type": "text/html; charset=utf-8",
+      "Compressed": false
+    }
+  ],
+  "API Performance": [
+    {
+      "optimization_state": "before",
+      "avg_response_time": 9.489154815673828,
+      "min_response_time": 4.991054534912109,
+      "max_response_time": 14.661788940429688,
+      "avg_cpu_usage": 37.67,
+      "avg_memory_usage": 92.02,
+      "avg_response_size": 158,
+      "scenario": "Dashboard Stats"
+    },
+    {
+      "optimization_state": "after",
+      "avg_response_time": 7.05714225769043,
+      "min_response_time": 5.006313323974609,
+      "max_response_time": 9.004354476928711,
+      "avg_cpu_usage": 27.39,
+      "avg_memory_usage": 92.02,
+      "avg_response_size": 158,
+      "scenario": "Dashboard Stats"
+    },
+    {
+      "optimization_state": "before",
+      "avg_response_time": 41.765403747558594,
+      "min_response_time": 35.53915023803711,
+      "max_response_time": 45.574188232421875,
+      "avg_cpu_usage": 41.230000000000004,
+      "avg_memory_usage": 91.97,
+      "avg_response_size": 2152,
+      "scenario": "Patient List"
+    },
+    {
+      "optimization_state": "after",
+      "avg_response_time": 36.277103424072266,
+      "min_response_time": 33.42771530151367,
+      "max_response_time": 38.463592529296875,
+      "avg_cpu_usage": 25.73,
+      "avg_memory_usage": 92.08,
+      "avg_response_size": 2152,
+      "scenario": "Patient List"
+    },
+    {
+      "optimization_state": "before",
+      "avg_response_time": 13.330841064453125,
+      "min_response_time": 8.420705795288086,
+      "max_response_time": 16.996383666992188,
+      "avg_cpu_usage": 45.559999999999995,
+      "avg_memory_usage": 92.1,
+      "avg_response_size": 0,
+      "scenario": "Patient Search"
+    },
+    {
+      "optimization_state": "after",
+      "avg_response_time": 13.326168060302734,
+      "min_response_time": 11.529922485351562,
+      "max_response_time": 16.5402889251709,
+      "avg_cpu_usage": 38.34,
+      "avg_memory_usage": 92.1,
+      "avg_response_size": 0,
+      "scenario": "Patient Search"
+    },
+    {
+      "optimization_state": "before",
+      "avg_response_time": 26.517391204833984,
+      "min_response_time": 21.93474769592285,
+      "max_response_time": 36.76962852478027,
+      "avg_cpu_usage": 31.650000000000002,
+      "avg_memory_usage": 92.1,
+      "avg_response_size": 498,
+      "scenario": "Patient Details"
+    },
+    {
+      "optimization_state": "after",
+      "avg_response_time": 15.791845321655273,
+      "min_response_time": 13.926506042480469,
+      "max_response_time": 17.929553985595703,
+      "avg_cpu_usage": 33.07,
+      "avg_memory_usage": 92.1,
+      "avg_response_size": 498,
+      "scenario": "Patient Details"
+    },
+    {
+      "optimization_state": "before",
+      "avg_response_time": 13.649749755859375,
+      "min_response_time": 11.018753051757812,
+      "max_response_time": 18.27859878540039,
+      "avg_cpu_usage": 40.56,
+      "avg_memory_usage": 92.1,
+      "avg_response_size": 189,
+      "scenario": "Patient Visits"
+    },
+    {
+      "optimization_state": "after",
+      "avg_response_time": 21.90718650817871,
+      "min_response_time": 9.996414184570312,
+      "max_response_time": 58.34221839904785,
+      "avg_cpu_usage": 34.980000000000004,
+      "avg_memory_usage": 92.1,
+      "avg_response_size": 189,
+      "scenario": "Patient Visits"
+    },
+    {
+      "optimization_state": "before",
+      "avg_response_time": 19.411325454711914,
+      "min_response_time": 15.014171600341797,
+      "max_response_time": 23.638010025024414,
+      "avg_cpu_usage": 44.059999999999995,
+      "avg_memory_usage": 92.07,
+      "avg_response_size": 0,
+      "scenario": "Diagnosis Results"
+    },
+    {
+      "optimization_state": "after",
+      "avg_response_time": 19.997072219848633,
+      "min_response_time": 13.707399368286133,
+      "max_response_time": 25.50339698791504,
+      "avg_cpu_usage": 42.44,
+      "avg_memory_usage": 92.0,
+      "avg_response_size": 0,
+      "scenario": "Diagnosis Results"
+    }
+  ],
+  "Concurrent Load": [
+    {
+      "concurrent_users": 10,
+      "optimization_state": "before",
+      "successful_requests": 10,
+      "error_requests": 0,
+      "avg_response_time": 380.771279335022,
+      "requests_per_second": 16.673082595342528
+    },
+    {
+      "concurrent_users": 10,
+      "optimization_state": "after",
+      "successful_requests": 10,
+      "error_requests": 0,
+      "avg_response_time": 348.60901832580566,
+      "requests_per_second": 17.16265490383022
+    },
+    {
+      "concurrent_users": 50,
+      "optimization_state": "before",
+      "successful_requests": 50,
+      "error_requests": 0,
+      "avg_response_time": 1668.249168395996,
+      "requests_per_second": 25.51592390941323
+    },
+    {
+      "concurrent_users": 50,
+      "optimization_state": "after",
+      "successful_requests": 50,
+      "error_requests": 0,
+      "avg_response_time": 1384.7272062301636,
+      "requests_per_second": 27.814118601044605
+    },
+    {
+      "concurrent_users": 100,
+      "optimization_state": "before",
+      "successful_requests": 100,
+      "error_requests": 0,
+      "avg_response_time": 3009.4682812690735,
+      "requests_per_second": 26.861606914703735
+    },
+    {
+      "concurrent_users": 100,
+      "optimization_state": "after",
+      "successful_requests": 100,
+      "error_requests": 0,
+      "avg_response_time": 3407.4279522895813,
+      "requests_per_second": 25.48079052280496
+    },
+    {
+      "concurrent_users": 200,
+      "optimization_state": "before",
+      "successful_requests": 200,
+      "error_requests": 0,
+      "avg_response_time": 7870.521193742752,
+      "requests_per_second": 20.978209951153424
+    },
+    {
+      "concurrent_users": 200,
+      "optimization_state": "after",
+      "successful_requests": 200,
+      "error_requests": 0,
+      "avg_response_time": 8746.575607061386,
+      "requests_per_second": 19.22298216397876
+    }
+  ],
+  "Performance Improvements": [
+    {
+      "Scenario": "Dashboard Stats",
+      "Before Response Time (ms)": 9.489154815673828,
+      "After Response Time (ms)": 7.05714225769043,
+      "Response Time Improvement (%)": 25.63,
+      "Before CPU Usage (%)": 37.67,
+      "After CPU Usage (%)": 27.39,
+      "CPU Usage Improvement (%)": 27.29
+    },
+    {
+      "Scenario": "Patient List",
+      "Before Response Time (ms)": 41.765403747558594,
+      "After Response Time (ms)": 36.277103424072266,
+      "Response Time Improvement (%)": 13.14,
+      "Before CPU Usage (%)": 41.230000000000004,
+      "After CPU Usage (%)": 25.73,
+      "CPU Usage Improvement (%)": 37.59
+    },
+    {
+      "Scenario": "Patient Search",
+      "Before Response Time (ms)": 13.330841064453125,
+      "After Response Time (ms)": 13.326168060302734,
+      "Response Time Improvement (%)": 0.04,
+      "Before CPU Usage (%)": 45.559999999999995,
+      "After CPU Usage (%)": 38.34,
+      "CPU Usage Improvement (%)": 15.85
+    },
+    {
+      "Scenario": "Patient Details",
+      "Before Response Time (ms)": 26.517391204833984,
+      "After Response Time (ms)": 15.791845321655273,
+      "Response Time Improvement (%)": 40.45,
+      "Before CPU Usage (%)": 31.650000000000002,
+      "After CPU Usage (%)": 33.07,
+      "CPU Usage Improvement (%)": -4.49
+    },
+    {
+      "Scenario": "Patient Visits",
+      "Before Response Time (ms)": 13.649749755859375,
+      "After Response Time (ms)": 21.90718650817871,
+      "Response Time Improvement (%)": -60.5,
+      "Before CPU Usage (%)": 40.56,
+      "After CPU Usage (%)": 34.980000000000004,
+      "CPU Usage Improvement (%)": 13.76
+    },
+    {
+      "Scenario": "Diagnosis Results",
+      "Before Response Time (ms)": 19.411325454711914,
+      "After Response Time (ms)": 19.997072219848633,
+      "Response Time Improvement (%)": -3.02,
+      "Before CPU Usage (%)": 44.059999999999995,
+      "After CPU Usage (%)": 42.44,
+      "CPU Usage Improvement (%)": 3.68
+    }
+  ]
+}

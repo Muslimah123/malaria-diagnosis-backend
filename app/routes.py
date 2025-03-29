@@ -1577,63 +1577,498 @@ def process_images_backend():
 # import json
 
 
+# @api.route('/visits/<int:visit_id>/download-report', methods=['GET'])
+# @jwt_required()
+# def download_visit_report(visit_id):
+#     visit = Visit.query.get_or_404(visit_id)
+#     patient = Patient.query.get(visit.patient_id)
+#     diagnosis = DiagnosisResult.query.filter_by(visit_id=visit_id, image_id=None).first()
+
+#     buffer = BytesIO()
+#     doc = SimpleDocTemplate(buffer, pagesize=letter)
+#     styles = getSampleStyleSheet()
+#     elements = []
+
+#     # Add title
+#     elements.append(Paragraph(f"Visit Report - {visit.visit_date.strftime('%Y-%m-%d')}", styles['Title']))
+#     elements.append(Spacer(1, 12))
+
+#     # Add patient information
+#     elements.append(Paragraph(f"Patient: {patient.name}", styles['Heading2']))
+#     elements.append(Paragraph(f"Patient ID: {patient.patient_id}", styles['Normal']))
+#     elements.append(Paragraph(f"Age: {patient.age}", styles['Normal']))
+#     elements.append(Paragraph(f"Gender: {patient.gender}", styles['Normal']))
+#     elements.append(Spacer(1, 12))
+
+#     # Add visit information
+#     elements.append(Paragraph("Visit Details", styles['Heading2']))
+#     elements.append(Paragraph(f"Reason: {visit.reason}", styles['Normal']))
+#     elements.append(Paragraph(f"Symptoms: {visit.symptoms}", styles['Normal']))
+#     elements.append(Paragraph(f"Notes: {visit.notes}", styles['Normal']))
+#     elements.append(Spacer(1, 12))
+
+#     # Add diagnosis information
+#     if diagnosis:
+#         elements.append(Paragraph("Diagnosis Results", styles['Heading2']))
+#         data = [
+#             ["Parasite", diagnosis.parasite_name],
+#             ["Status", diagnosis.status],
+#             ["Confidence", f"{diagnosis.average_confidence:.2f}%"],
+#             ["Count", str(diagnosis.count)],
+#             ["Severity", diagnosis.severity_level],
+#             ["Parasite Density", f"{diagnosis.parasite_density:.2f}"],
+#             ["Total WBCs", str(diagnosis.total_wbcs)]
+#         ]
+#         t = Table(data)
+#         t.setStyle(TableStyle([
+#             ('BACKGROUND', (0, 0), (0, -1), colors.grey),
+#             ('TEXTCOLOR', (0, 0), (0, -1), colors.whitesmoke),
+#             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+#             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+#             ('FONTSIZE', (0, 0), (-1, -1), 10),
+#             ('BOTTOMPADDING', (0, 0), (-1, -1), 12),
+#             ('BACKGROUND', (1, 1), (-1, -1), colors.beige),
+#         ]))
+#         elements.append(t)
+
+#     doc.build(elements)
+#     buffer.seek(0)
+#     return send_file(buffer, as_attachment=True, download_name=f'visit_report_{visit_id}.pdf', mimetype='application/pdf')
+from flask import send_file
+from io import BytesIO
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.platypus import PageBreak, Flowable, Frame, NextPageTemplate, PageTemplate
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib import colors
+from reportlab.lib.units import inch, cm
+from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
+from reportlab.pdfgen import canvas
+from datetime import datetime, timedelta
+import os
+
+
+class HorizontalLine(Flowable):
+    """Custom flowable for a horizontal line with custom color and thickness"""
+    def __init__(self, width, thickness=1, color=colors.black):
+        Flowable.__init__(self)  
+        self.width = width
+        self.thickness = thickness
+        self.color = color
+
+    def draw(self):
+        self.canv.setStrokeColor(self.color)
+        self.canv.setLineWidth(self.thickness)
+        self.canv.line(0, 0, self.width, 0)
+
+
+def header_footer(canvas, doc):
+    # Save canvas state
+    canvas.saveState()
+    
+    # Header
+    header_color = colors.HexColor('#4361ee')
+    
+    # Draw a colored banner at the top
+    canvas.setFillColor(header_color)
+    canvas.rect(0, doc.height + doc.topMargin - 0.5*inch, doc.width + doc.leftMargin + doc.rightMargin, 1*inch, fill=1, stroke=0)
+    
+    # Add hospital logo (placeholder - in production, use an actual image file)
+    # logo_path = os.path.join(os.path.dirname(_file_), 'static/logo.png')
+    # if os.path.exists(logo_path):
+    #     canvas.drawImage(logo_path, doc.leftMargin, doc.height + doc.topMargin + 0.2*inch, width=0.8*inch, height=0.8*inch)
+    
+    # Add hospital name
+    canvas.setFont("Helvetica-Bold", 16)
+    canvas.setFillColor(colors.white)
+    canvas.drawString(doc.leftMargin + 0.1*inch, doc.height + doc.topMargin + 0.4*inch, "MEDICAL DIAGNOSIS CENTER")
+    
+    # Add header subtitle
+    canvas.setFont("Helvetica", 10)
+    canvas.drawString(doc.leftMargin + 0.1*inch, doc.height + doc.topMargin + 0.15*inch, "Patient Diagnosis Report")
+    
+    # Add date at the top right
+    canvas.setFont("Helvetica", 9)
+    canvas.drawRightString(doc.width + doc.leftMargin - 0.1*inch, doc.height + doc.topMargin + 0.15*inch, 
+                          f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+
+    # Footer
+    canvas.setFillColor(colors.HexColor('#e9ecef'))
+    canvas.rect(0, doc.bottomMargin - 0.75*inch, doc.width + doc.leftMargin + doc.rightMargin, 0.75*inch, fill=1, stroke=0)
+    
+    canvas.setFillColor(colors.HexColor('#495057'))
+    canvas.setFont("Helvetica", 8)
+    canvas.drawString(doc.leftMargin, doc.bottomMargin - 0.4*inch, 
+                     "This report is generated by the Automated Diagnostic System and should be reviewed by a healthcare professional.")
+    
+    # Add page number - FIXED: using canvas.getPageNumber()
+    canvas.setFont("Helvetica", 9)
+    page_num = f"Page {canvas.getPageNumber()}" 
+    canvas.drawRightString(doc.width + doc.leftMargin - 0.1*inch, doc.bottomMargin - 0.4*inch, page_num)
+    
+    # Add a line above the footer
+    canvas.setStrokeColor(colors.HexColor('#ced4da'))
+    canvas.setLineWidth(0.5)
+    canvas.line(doc.leftMargin, doc.bottomMargin - 0.05*inch, 
+                doc.width + doc.leftMargin - 0.1*inch, doc.bottomMargin - 0.05*inch)
+    
+    # Restore canvas state
+    canvas.restoreState()
+
+
+def get_severity_color(severity_level):
+    if severity_level.lower() == 'severe':
+        return colors.HexColor('#e63946')  # Red
+    elif severity_level.lower() == 'moderate':
+        return colors.HexColor('#f4a261')  # Orange
+    elif severity_level.lower() == 'mild':
+        return colors.HexColor('#40916c')  # Green
+    else:
+        return colors.HexColor('#6c757d')  # Gray
+
+
 @api.route('/visits/<int:visit_id>/download-report', methods=['GET'])
 @jwt_required()
 def download_visit_report(visit_id):
     visit = Visit.query.get_or_404(visit_id)
     patient = Patient.query.get(visit.patient_id)
     diagnosis = DiagnosisResult.query.filter_by(visit_id=visit_id, image_id=None).first()
+    image_diagnoses = DiagnosisResult.query.filter(DiagnosisResult.visit_id==visit_id, 
+                                                 DiagnosisResult.image_id.isnot(None)).all()
 
+    # Create a buffer and document
     buffer = BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    
+    # Set up document with proper margins
+    doc = SimpleDocTemplate(
+        buffer, 
+        pagesize=letter,
+        leftMargin=1*inch,
+        rightMargin=1*inch,
+        topMargin=1.25*inch,
+        bottomMargin=1*inch
+    )
+    
+    # Register header and footer
+    template = PageTemplate(id='normal', frames=[Frame(
+        doc.leftMargin, doc.bottomMargin, 
+        doc.width, doc.height, 
+        id='normal'
+    )], onPage=header_footer)
+    
+    doc.addPageTemplates([template])
+    
+    # Styles setup
     styles = getSampleStyleSheet()
+    
+    # Add custom styles
+    styles.add(ParagraphStyle(
+        name='SectionTitle',
+        parent=styles['Heading2'],
+        fontSize=13,
+        textColor=colors.HexColor('#364fc7'),
+        spaceAfter=6
+    ))
+    
+    styles.add(ParagraphStyle(
+        name='SubTitle',
+        parent=styles['Heading3'],
+        fontSize=10,
+        textColor=colors.HexColor('#495057'),
+        spaceAfter=3
+    ))
+    
+    styles.add(ParagraphStyle(
+        name='InfoValue',
+        parent=styles['Normal'],
+        fontSize=10,
+        spaceAfter=3
+    ))
+    
+    styles.add(ParagraphStyle(
+        name='InfoLabel',
+        parent=styles['Normal'],
+        fontSize=9,
+        textColor=colors.HexColor('#6c757d'),
+        spaceAfter=1
+    ))
+    
+    # Empty list to hold flowables
     elements = []
-
-    # Add title
-    elements.append(Paragraph(f"Visit Report - {visit.visit_date.strftime('%Y-%m-%d')}", styles['Title']))
-    elements.append(Spacer(1, 12))
-
-    # Add patient information
-    elements.append(Paragraph(f"Patient: {patient.name}", styles['Heading2']))
-    elements.append(Paragraph(f"Patient ID: {patient.patient_id}", styles['Normal']))
-    elements.append(Paragraph(f"Age: {patient.age}", styles['Normal']))
-    elements.append(Paragraph(f"Gender: {patient.gender}", styles['Normal']))
-    elements.append(Spacer(1, 12))
-
-    # Add visit information
-    elements.append(Paragraph("Visit Details", styles['Heading2']))
-    elements.append(Paragraph(f"Reason: {visit.reason}", styles['Normal']))
-    elements.append(Paragraph(f"Symptoms: {visit.symptoms}", styles['Normal']))
-    elements.append(Paragraph(f"Notes: {visit.notes}", styles['Normal']))
-    elements.append(Spacer(1, 12))
-
-    # Add diagnosis information
-    if diagnosis:
-        elements.append(Paragraph("Diagnosis Results", styles['Heading2']))
-        data = [
-            ["Parasite", diagnosis.parasite_name],
-            ["Status", diagnosis.status],
-            ["Confidence", f"{diagnosis.average_confidence:.2f}%"],
-            ["Count", str(diagnosis.count)],
-            ["Severity", diagnosis.severity_level],
-            ["Parasite Density", f"{diagnosis.parasite_density:.2f}"],
-            ["Total WBCs", str(diagnosis.total_wbcs)]
+    
+    # Add title (will be replaced by header function)
+    elements.append(Spacer(1, 0.5*inch))
+    
+    # Add confidential stamp
+    elements.append(Paragraph("CONFIDENTIAL MEDICAL RECORD", 
+                              ParagraphStyle('Confidential', fontSize=10, textColor=colors.red, alignment=TA_CENTER)))
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Patient information section
+    patient_info_title = Paragraph("Patient Information", styles['SectionTitle'])
+    elements.append(patient_info_title)
+    
+    # Create a horizontal line
+    elements.append(HorizontalLine(doc.width, 1, colors.HexColor('#ced4da')))
+    elements.append(Spacer(1, 0.1*inch))
+    
+    # Patient info as a simple table - FIXED VERSION
+    patient_data = [
+        [
+            Paragraph("Name:", styles['InfoLabel']), 
+            Paragraph(f"{patient.name}", styles['InfoValue']),
+            Paragraph("Patient ID:", styles['InfoLabel']), 
+            Paragraph(f"{patient.patient_id}", styles['InfoValue'])
+        ],
+        [
+            Paragraph("Age:", styles['InfoLabel']), 
+            Paragraph(f"{patient.age} years", styles['InfoValue']),
+            Paragraph("Gender:", styles['InfoLabel']), 
+            Paragraph(f"{patient.gender.capitalize()}", styles['InfoValue'])
         ]
-        t = Table(data)
-        t.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (0, -1), colors.grey),
-            ('TEXTCOLOR', (0, 0), (0, -1), colors.whitesmoke),
+    ]
+    
+    patient_table = Table(patient_data, colWidths=[1.3*inch, doc.width/2-1.3*inch, 1.3*inch, doc.width/2-1.3*inch])
+    patient_table.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
+    ]))
+    
+    elements.append(patient_table)
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Visit information section - FIXED VERSION
+    elements.append(Paragraph("Visit Details", styles['SectionTitle']))
+    elements.append(HorizontalLine(doc.width, 1, colors.HexColor('#ced4da')))
+    elements.append(Spacer(1, 0.1*inch))
+    
+    visit_data = [
+        [
+            Paragraph("Visit Date:", styles['InfoLabel']), 
+            Paragraph(f"{visit.visit_date.strftime('%Y-%m-%d')}", styles['InfoValue']),
+            Paragraph("Visit ID:", styles['InfoLabel']), 
+            Paragraph(f"{visit.visit_id}", styles['InfoValue'])
+        ]
+    ]
+    
+    visit_table = Table(visit_data, colWidths=[1.3*inch, doc.width/2-1.3*inch, 1.3*inch, doc.width/2-1.3*inch])
+    visit_table.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
+    ]))
+    
+    elements.append(visit_table)
+    elements.append(Spacer(1, 0.1*inch))
+    
+    # Visit reason, symptoms, and notes
+    elements.append(Paragraph("Reason for Visit:", styles['SubTitle']))
+    elements.append(Paragraph(visit.reason or "Not provided", styles['Normal']))
+    elements.append(Spacer(1, 0.1*inch))
+    
+    elements.append(Paragraph("Symptoms:", styles['SubTitle']))
+    elements.append(Paragraph(visit.symptoms or "None reported", styles['Normal']))
+    elements.append(Spacer(1, 0.1*inch))
+    
+    elements.append(Paragraph("Clinical Notes:", styles['SubTitle']))
+    elements.append(Paragraph(visit.notes or "No notes provided", styles['Normal']))
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Diagnosis section
+    if diagnosis:
+        elements.append(Paragraph("Diagnosis Results", styles['SectionTitle']))
+        elements.append(HorizontalLine(doc.width, 1, colors.HexColor('#ced4da')))
+        elements.append(Spacer(1, 0.1*inch))
+        
+        # Get severity info
+        severity_color = get_severity_color(diagnosis.severity_level)
+        severity_text = diagnosis.severity_level.upper()
+        
+        # Diagnosis summary - FIXED VERSION
+        diagnosis_summary_data = [
+            [
+                Paragraph("Parasite", styles['SubTitle']), 
+                Paragraph("Status", styles['SubTitle']), 
+                Paragraph("Confidence", styles['SubTitle']), 
+                Paragraph("Severity", styles['SubTitle'])
+            ],
+            [
+                Paragraph(diagnosis.parasite_name, styles['Normal']), 
+                Paragraph(diagnosis.status, styles['Normal']), 
+                Paragraph(f"{diagnosis.average_confidence:.2f}%", styles['Normal']), 
+                Paragraph(severity_text, styles['Normal'])  # Simple text without custom styling
+            ]
+        ]
+        
+        # Create table with proper styling
+        diagnosis_summary = Table(diagnosis_summary_data, colWidths=[doc.width/4, doc.width/4, doc.width/4, doc.width/4])
+        
+        # Build the table style
+        table_style = [
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#f8f9fa')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor('#495057')),
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-            ('FONTSIZE', (0, 0), (-1, -1), 10),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 12),
-            ('BACKGROUND', (1, 1), (-1, -1), colors.beige),
+            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
+            ('TOPPADDING', (0, 0), (-1, -1), 8),
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#dee2e6')),
+        ]
+        
+        # Add severity cell styling
+        table_style.append(('BACKGROUND', (3, 1), (3, 1), severity_color))
+        table_style.append(('TEXTCOLOR', (3, 1), (3, 1), colors.white))
+        
+        diagnosis_summary.setStyle(TableStyle(table_style))
+        
+        elements.append(diagnosis_summary)
+        elements.append(Spacer(1, 0.1*inch))
+        
+        # Detailed diagnosis data
+        elements.append(Paragraph("Detailed Analysis", styles['SubTitle']))
+        
+        # Create header style
+        header_style = ParagraphStyle('TableHeader', parent=styles['Normal'], fontName='Helvetica-Bold')
+        
+        diagnostic_data = [
+            [
+                Paragraph("Parameter", header_style), 
+                Paragraph("Value", header_style)
+            ],
+            [
+                Paragraph("Parasite Count", styles['Normal']), 
+                Paragraph(str(diagnosis.count), styles['Normal'])
+            ],
+            [
+                Paragraph("Total WBCs", styles['Normal']), 
+                Paragraph(str(diagnosis.total_wbcs), styles['Normal'])
+            ],
+            [
+                Paragraph("Parasite Density", styles['Normal']), 
+                Paragraph(f"{diagnosis.parasite_density:.2f} parasites/μL", styles['Normal'])
+            ]
+        ]
+        
+        diagnostic_table = Table(diagnostic_data, colWidths=[doc.width/2, doc.width/2])
+        diagnostic_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#e9ecef')),
+            ('BACKGROUND', (0, 1), (0, -1), colors.HexColor('#f8f9fa')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor('#495057')),
+            ('ALIGN', (0, 0), (0, -1), 'LEFT'),
+            ('ALIGN', (1, 0), (1, -1), 'RIGHT'),
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
+            ('TOPPADDING', (0, 0), (-1, -1), 8),
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#dee2e6')),
         ]))
-        elements.append(t)
-
+        
+        elements.append(diagnostic_table)
+        
+        # Image diagnoses if available
+        if image_diagnoses:
+            elements.append(Spacer(1, 0.3*inch))
+            elements.append(Paragraph("Individual Image Results", styles['SubTitle']))
+            
+            # Prepare header row with paragraph objects
+            image_data = [
+                [
+                    Paragraph("Image ID", header_style),
+                    Paragraph("Parasite Count", header_style),
+                    Paragraph("WBC Count", header_style)
+                ]
+            ]
+            
+            # Add data rows with paragraph objects
+            for img_diagnosis in image_diagnoses:
+                image_data.append([
+                    Paragraph(str(img_diagnosis.image_id), styles['Normal']),
+                    Paragraph(str(img_diagnosis.count), styles['Normal']),
+                    Paragraph(str(img_diagnosis.wbc_count), styles['Normal'])
+                ])
+            
+            img_table = Table(image_data, colWidths=[doc.width/3, doc.width/3, doc.width/3])
+            img_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#e9ecef')),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor('#495057')),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+                ('TOPPADDING', (0, 0), (-1, -1), 6),
+                ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#dee2e6')),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#ffffff')),
+                ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.HexColor('#f8f9fa'), colors.HexColor('#ffffff')]),
+            ]))
+            
+            elements.append(img_table)
+    else:
+        elements.append(Paragraph("Diagnosis Results", styles['SectionTitle']))
+        elements.append(HorizontalLine(doc.width, 1, colors.HexColor('#ced4da')))
+        elements.append(Spacer(1, 0.1*inch))
+        elements.append(Paragraph("No diagnosis results available for this visit.", styles['Normal']))
+    
+    # Disclaimer section
+    elements.append(Spacer(1, 0.5*inch))
+    elements.append(HorizontalLine(doc.width, 1, colors.HexColor('#ced4da')))
+    elements.append(Spacer(1, 0.1*inch))
+    
+    disclaimer_style = ParagraphStyle(
+        'Disclaimer',
+        parent=styles['Normal'],
+        fontSize=8,
+        textColor=colors.HexColor('#6c757d'),
+        alignment=TA_LEFT
+    )
+    
+    disclaimer_text = """
+    DISCLAIMER: This report is generated by an automated diagnostic system and should be interpreted by a qualified healthcare professional.
+    The results provided here are based on computational analysis and may require clinical correlation.
+    Please consult with a healthcare provider before making any medical decisions based on this report.
+    """
+    
+    elements.append(Paragraph(disclaimer_text, disclaimer_style))
+    
+    # Signature section
+    elements.append(Spacer(1, 0.5*inch))
+    
+    signature_style = ParagraphStyle('SignatureLabel', parent=styles['Normal'], fontSize=9, textColor=colors.HexColor('#6c757d'))
+    
+    signature_data = [
+        [
+            Paragraph("", styles['Normal']),
+            Paragraph("", styles['Normal'])
+        ],
+        [
+            Paragraph("Physician Signature", signature_style),
+            Paragraph("Laboratory Director", signature_style)
+        ],
+        [
+            Paragraph("Date: _______________", signature_style),
+            Paragraph("Date: _______________", signature_style)
+        ]
+    ]
+    
+    signature_table = Table(signature_data, colWidths=[doc.width/2, doc.width/2])
+    signature_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
+    ]))
+    
+    elements.append(signature_table)
+    
+    # Build the document
     doc.build(elements)
     buffer.seek(0)
-    return send_file(buffer, as_attachment=True, download_name=f'visit_report_{visit_id}.pdf', mimetype='application/pdf')
+    
+    return send_file(
+        buffer, 
+        as_attachment=True, 
+        download_name=f'patient_{patient.patient_id}visit{visit_id}_report.pdf', 
+        mimetype='application/pdf'
+    )
 
 @api.route('/notifications', methods=['GET'])
 @jwt_required()

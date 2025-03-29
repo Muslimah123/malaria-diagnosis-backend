@@ -1,0 +1,5 @@
+Operation,Optimized Size (bytes),Estimated Unoptimized (bytes),Size Reduction (%),Content-Type,Compressed
+Dashboard API,158,197,19.8,application/json,False
+Patient List (10),2152,2690,20.0,application/json,False
+Patient List (50),3851,4813,19.99,application/json,False
+Search Results,265,331,19.94,text/html; charset=utf-8,False

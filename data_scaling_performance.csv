@@ -1,0 +1,5 @@
+Data Volume,Before Response Time (ms),After Response Time (ms),Improvement (%),Before Memory (%),After Memory (%),Response Size (bytes)
+10,52.73,35.21,33.24,91.81,91.8,2152
+25,32.33,35.19,-8.83,91.84,91.9,3851
+50,37.82,33.98,10.13,91.91,92.0,3851
+100,47.44,39.74,16.23,92.1,92.0,3852

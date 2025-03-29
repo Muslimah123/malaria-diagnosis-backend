@@ -1,0 +1,4 @@
+Operation,Baseline Memory (%),Avg Memory Usage (%),Peak Memory (%),Memory Impact (%)
+Dashboard Loading,92.0,92.0,92.0,0.0
+Patient Search,92.0,92.0,92.0,0.0
+Pagination,92.0,92.0,92.0,0.0

@@ -1,0 +1,4 @@
+Cache Test,First Run (ms),Avg Subsequent Runs (ms),Cache Speedup (%),Estimated Hit Ratio (%)
+Patient List Cache,2.0,0.8,60.0,60.0
+Dashboard Stats Cache,2.0,0.8,59.94,59.94
+Patient Search Cache,6.77,1.09,83.82,83.82
