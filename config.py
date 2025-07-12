@@ -10,7 +10,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379/0')
     CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localhost:6379/0')
-    EXTERNAL_ML_API_URL = os.environ.get('EXTERNAL_ML_API_URL', 'http://localhost:5001/process_images')
+    EXTERNAL_ML_API_URL = os.environ.get('EXTERNAL_ML_API_URL', 'http://localhost:5002/process_images')
 
 class DevelopmentConfig(Config):
     DEBUG = True

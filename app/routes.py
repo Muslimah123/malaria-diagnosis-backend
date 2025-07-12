@@ -47,6 +47,7 @@ from .utils import optimize_query, monitor_query_performance, cache_query, creat
 from .database_management import refresh_patient_summary_view
 from sqlalchemy.sql import text
 import psycopg2
+import json
 
 
 
@@ -729,36 +730,6 @@ def get_patient(patient_id):
     
     return jsonify(patient_data)
 
-# @api.route('/patients/<string:patient_id>', methods=['PUT'])
-# @jwt_required()
-# def update_patient(patient_id):
-#     print(f"Received update request for patient {patient_id}")
-
-#     data = request.get_json()
-
-#     # Remove 'patient_id' from the data if it exists
-#     if 'patient_id' in data:
-#         del data['patient_id']  # We don't need to update this, as it's part of the URL
-
-#     # Fetch the patient from the database
-#     patient = Patient.query.filter_by(patient_id=patient_id).first()
-
-#     # If the patient doesn't exist, return a 404
-#     if not patient:
-#         return jsonify({'message': 'Patient not found'}), 404
-
-#     # Load the data into the patient instance
-#     try:
-#         patient = patient_schema.load(data, instance=patient, session=db.session, partial=True)
-#         db.session.commit()
-#         update_all_patient_search_vectors()
-        
-#         return jsonify({'message': 'Patient updated successfully!'}), 200
-#     except ValidationError as e:
-#         return jsonify({'errors': e.messages}), 400
-#     except Exception as e:
-#         db.session.rollback()  # Rollback in case of errors
-#         return jsonify({'error': str(e)}), 500
 from marshmallow import ValidationError
 from sqlalchemy.exc import IntegrityError
 
@@ -977,19 +948,42 @@ def get_visit_status(visit_id):
         'image_statuses': image_statuses
     }), 200
 
+from app.performance_monitor import (
+    track_performance, PerformanceTracker, track_db_query,
+    PerformanceMetric, get_performance_stats
+)
+from flask import g
+import time
+
+# Update the upload_visit_images route
+  
 @api.route('/visits/<int:visit_id>/images', methods=['POST'])
 @jwt_required()
+@track_performance(metric_type='upload')
 def upload_visit_images(visit_id):
+    # Track upload start time from frontend (if provided)
+    upload_start_client = request.form.get('upload_start_time')
+    if upload_start_client:
+        client_upload_time = time.time() - (float(upload_start_client) / 1000)
+        g.client_upload_time = client_upload_time
+    
     visit = Visit.query.get_or_404(visit_id)
 
     if 'images' not in request.files:
         return jsonify({"error": "No images provided"}), 400
 
     images = request.files.getlist('images')
+    
+    # Track file sizes
+    total_file_size = sum(image.content_length for image in images if image.content_length)
+    g.total_file_size = total_file_size
+    g.num_images = len(images)
+    
     existing_images_count = Image.query.filter_by(visit_id=visit_id).count()
 
-    if len(images) + existing_images_count > 5:
-        return jsonify({"error": f"Maximum 5 images allowed per visit. This visit already has {existing_images_count} images."}), 400
+    # Updated maximum limit from 5 to 10 images
+    if len(images) + existing_images_count > 10:
+        return jsonify({"error": f"Maximum 10 images allowed per visit. This visit already has {existing_images_count} images."}), 400
 
     smear_types = request.form.getlist('smear_type')
     test_types = request.form.getlist('test_type')
@@ -998,45 +992,63 @@ def upload_visit_images(visit_id):
         return jsonify({"error": "Mismatch in number of smear types or test types"}), 400
 
     uploaded_images = []
-    # image_paths = []  # To store paths for batch processing
 
     try:
-        for idx, image in enumerate(images):
-            if not allowed_file(image.filename):
-                logging.warning(f"Rejected file: {image.filename}")
-                continue  # Skip to the next file
-            
-            logging.info(f"Processing image: {image.filename}, {image.content_type}, {image.content_length}")
-            
-            file_path = save_image(image, current_app.config['UPLOAD_FOLDER'])
-            if file_path:
-                new_image = Image(
-                    visit_id=visit_id,
-                    file_path=file_path,
-                    smear_type=smear_types[idx],
-                    test_type=test_types[idx],
-                    processing_status='queued'
-                )
-                db.session.add(new_image)
-                # db.session.flush()  # Ensures the image is assigned an ID
-                uploaded_images.append(new_image)
-                # image_paths.append(file_path)  # Collect file paths for batch processing
-                logging.info(f"Successfully processed and saved image: {image.filename}")
-            else:
-                logging.warning(f"Failed to save image: {image.filename}")
+        with PerformanceTracker("image_saving"):
+            for idx, image in enumerate(images):
+                if not allowed_file(image.filename):
+                    logging.warning(f"Rejected file: {image.filename}")
+                    continue
+                
+                logging.info(f"Processing image: {image.filename}, {image.content_type}, {image.content_length}")
+                
+                # Track individual image save time
+                with PerformanceTracker(f"save_image_{idx}"):
+                    file_path = save_image(image, current_app.config['UPLOAD_FOLDER'])
+                
+                if file_path:
+                    new_image = Image(
+                        visit_id=visit_id,
+                        file_path=file_path,
+                        smear_type=smear_types[idx],
+                        test_type=test_types[idx],
+                        processing_status='queued'
+                    )
+                    db.session.add(new_image)
+                    uploaded_images.append(new_image)
+                    logging.info(f"Successfully processed and saved image: {image.filename}")
+                else:
+                    logging.warning(f"Failed to save image: {image.filename}")
 
         if uploaded_images:
-            db.session.commit()
+            with PerformanceTracker("database_commit"):
+                db.session.commit()
+            
+            # Mark upload end time
+            g.upload_end = time.time()
+            
+            # Save performance metrics
+            if hasattr(g, 'request_id'):
+                metric = PerformanceMetric.query.filter_by(request_id=g.request_id).first()
+                if metric:
+                    metric.visit_id = visit_id
+                    metric.file_size = total_file_size
+                    metric.num_images = len(uploaded_images)
+                    metric.metadata = {
+                        'client_upload_time': getattr(g, 'client_upload_time', None),
+                        'operation_times': getattr(g, 'operation_times', {})
+                    }
+                    db.session.commit()
 
             new_total_image_count = existing_images_count + len(uploaded_images)
 
-            # Trigger diagnosis if total images reach or exceed 5
-            # if new_total_image_count >= 5:
-            #     process_images_batch.delay(visit_id)
-
             return jsonify({
                 "message": f"{len(uploaded_images)} images uploaded successfully.",
-                "total_images": new_total_image_count
+                "total_images": new_total_image_count,
+                "performance": {
+                    "upload_time": g.upload_end - g.upload_start,
+                    "request_id": g.request_id
+                }
             }), 201
         else:
             return jsonify({"error": "No valid images were uploaded. Allowed formats are PNG, JPG, JPEG, and GIF."}), 400
@@ -1046,6 +1058,277 @@ def upload_visit_images(visit_id):
         db.session.rollback()
         return jsonify({"error": f"Error uploading images: {str(e)}"}), 500
 
+@api.route('/visits/<int:visit_id>/initiate-diagnosis', methods=['POST'])
+@jwt_required()
+@track_performance(metric_type='processing')
+def initiate_diagnosis(visit_id):
+    g.processing_start = time.time()
+    
+    try:
+        visit = Visit.query.get_or_404(visit_id)
+
+        # Track database query time
+        with PerformanceTracker("fetch_images"):
+            images = Image.query.filter_by(visit_id=visit_id).all()
+
+        if len(images) < 5:
+            return jsonify({"error": "At least 5 images are required to start the diagnosis"}), 400
+
+        # Check for existing overall diagnosis
+        existing_diagnosis = DiagnosisResult.query.filter_by(visit_id=visit_id, image_id=None).first()
+        if existing_diagnosis:
+            return jsonify({
+                "message": "Diagnosis has already been performed for this visit",
+                "diagnosis": diagnosis_result_schema.dump(existing_diagnosis)
+            }), 200
+
+        image_paths = [os.path.abspath(image.file_path) for image in images]
+        api_url = current_app.config.get('EXTERNAL_ML_API_URL', 'http://localhost:5002/diagnose')
+
+        # Call external model API
+        with PerformanceTracker("model_inference"):
+            current_app.logger.info(f"Calling external API at {api_url} with {len(image_paths)} images")
+            response = requests.post(api_url, json={'image_paths': image_paths})
+            if response.status_code != 200:
+                return jsonify({"error": f"Diagnosis API request failed: {response.text}"}), 500
+            result = response.json()
+
+        current_app.logger.info(f"Received API response: {result}")
+
+        # Calculate totals using WHO methodology
+        total_parasites = 0
+        total_wbcs = 0
+        
+        for detection in result['detections']:
+            total_parasites += detection.get('parasite_count', 0)
+            total_wbcs += detection.get('white_blood_cells_detected', 0)
+
+        # WHO Formula: Parasites/μL = (Number of parasites counted × 8000) / Number of white cells counted
+        if total_wbcs == 0:
+            return jsonify({"error": "No white blood cells detected for density calculation"}), 400
+            
+        parasite_density = (total_parasites * 8000) / total_wbcs
+        
+        # Validate counting criteria according to WHO SOP
+        counting_valid = validate_who_counting_criteria(total_parasites, total_wbcs)
+        if not counting_valid['valid']:
+            current_app.logger.warning(f"WHO counting criteria not met: {counting_valid['message']}")
+        
+        severity_level = classify_severity(parasite_density)
+        status = 'positive' if result['status'] in ['POSITIVE', 'POS'] else 'negative'
+
+        parasite_info = result.get('most_probable_parasite', result.get('parasite name', {}))
+        parasite_type = parasite_info.get('type') if parasite_info else None
+        confidence = parasite_info.get('confidence', 0) * 100 if parasite_info else 0
+
+        with PerformanceTracker("save_diagnosis_results"):
+            # Save overall diagnosis
+            overall_diagnosis = DiagnosisResult(
+                visit_id=visit_id,
+                image_id=None,
+                parasite_name=parasite_type,
+                average_confidence=confidence,
+                count=total_parasites,
+                severity_level=severity_level,
+                status=status,
+                parasite_density=round(parasite_density, 1),  # Round to 1 decimal place per WHO
+                total_wbcs=total_wbcs
+            )
+            db.session.add(overall_diagnosis)
+
+            # Save individual diagnoses and metadata
+            for image, detection in zip(images, result['detections']):
+                image_diagnosis = DiagnosisResult(
+                    visit_id=visit_id,
+                    image_id=image.image_id,
+                    count=detection.get('parasite_count', 0),
+                    wbc_count=detection.get('white_blood_cells_detected', 0)
+                )
+                db.session.add(image_diagnosis)
+
+                metadata = Metadata(
+                    entity_id=image.image_id,
+                    entity_type='image',
+                    key='detection_data',
+                    value=json.dumps(detection)
+                )
+                db.session.add(metadata)
+
+                image.processing_status = 'completed'
+
+            visit.status = 'completed'
+            db.session.commit()
+
+        # Mark processing end time
+        g.processing_end = time.time()
+        processing_time = g.processing_end - g.processing_start
+
+        # Notify doctors
+        admin_users = User.query.filter_by(role='admin').all()
+        for admin in admin_users:
+            create_notification(admin.user_id, f"Diagnosis results ready for visit ID: {visit_id}")
+
+        # Fetch all diagnoses
+        saved_overall = DiagnosisResult.query.filter_by(visit_id=visit_id, image_id=None).first()
+        saved_individual = DiagnosisResult.query.filter(
+            DiagnosisResult.visit_id == visit_id,
+            DiagnosisResult.image_id != None
+        ).all()
+
+        # Save performance metrics
+        if hasattr(g, 'request_id'):
+            metric = PerformanceMetric.query.filter_by(request_id=g.request_id).first()
+            if metric:
+                metric.visit_id = visit_id
+                metric.processing_time = processing_time
+                metric.metadata = {
+                    'num_images': len(images),
+                    'model_confidence': confidence,
+                    'parasite_count': total_parasites,
+                    'total_wbcs': total_wbcs,
+                    'parasite_density': parasite_density,
+                    'counting_validation': counting_valid,
+                    'operation_times': getattr(g, 'operation_times', {})
+                }
+                db.session.commit()
+
+        return jsonify({
+            "message": "Diagnosis process completed successfully",
+            "overall_diagnosis": diagnosis_result_schema.dump(saved_overall),
+            "image_diagnoses": diagnosis_results_schema.dump(saved_individual),
+            "summary": {
+                "dominant_parasite": parasite_type,
+                "average_confidence": confidence,
+                "total_parasites": total_parasites,
+                "parasite_density": round(parasite_density, 1),
+                "severity": severity_level,
+                "total_wbcs": total_wbcs,
+                "counting_validation": counting_valid
+            },
+            "performance": {
+                "processing_time": processing_time,
+                "request_id": g.request_id
+            }
+        }), 200
+
+    except Exception as e:
+        db.session.rollback()
+        import traceback
+        current_app.logger.error(f"Error initiating diagnosis: {str(e)}\n{traceback.format_exc()}")
+        return jsonify({"error": f"Error initiating diagnosis: {str(e)}"}), 500
+
+
+def validate_who_counting_criteria(parasite_count, wbc_count):
+    """
+    Validate counting meets WHO SOP MM-09 criteria
+    """
+    if parasite_count >= 100 and wbc_count >= 200:
+        return {
+            "valid": True,
+            "message": f"Valid: {parasite_count} parasites in {wbc_count} WBCs (≥100 parasites in ≥200 WBCs)",
+            "method": "high_parasitemia"
+        }
+    elif parasite_count <= 99 and wbc_count >= 500:
+        return {
+            "valid": True,
+            "message": f"Valid: {parasite_count} parasites in {wbc_count} WBCs (≤99 parasites in ≥500 WBCs)",
+            "method": "low_parasitemia"
+        }
+    else:
+        return {
+            "valid": False,
+            "message": f"Invalid count: {parasite_count} parasites, {wbc_count} WBCs. WHO requires either ≥100 parasites in ≥200 WBCs OR ≤99 parasites in ≥500 WBCs",
+            "method": "insufficient_count"
+        }
+
+
+def classify_severity(parasite_density):
+    """
+    Classify severity according to WHO guidelines
+    """
+    if parasite_density < 1000:
+        return "Mild"
+    elif 1000 <= parasite_density <= 10000:
+        return "Moderate"
+    else:
+        return "Severe"
+
+
+# New endpoint for performance analytics
+@api.route('/analytics/performance', methods=['GET'])
+@jwt_required()
+def get_performance_analytics():
+    """Get performance analytics data"""
+    endpoint = request.args.get('endpoint')
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    
+    # Convert date strings to datetime objects
+    if start_date:
+        start_date = datetime.fromisoformat(start_date)
+    if end_date:
+        end_date = datetime.fromisoformat(end_date)
+    
+    stats = get_performance_stats(endpoint, start_date, end_date)
+    
+    if not stats:
+        return jsonify({"message": "No performance data available"}), 404
+    
+    # Get recent metrics for chart
+    recent_metrics = PerformanceMetric.query.filter(
+        PerformanceMetric.timestamp >= datetime.utcnow() - timedelta(hours=24)
+    ).order_by(PerformanceMetric.timestamp.desc()).limit(100).all()
+    
+    return jsonify({
+        "statistics": stats,
+        "recent_metrics": [m.to_dict() for m in recent_metrics],
+        "endpoints": {
+            "upload": "/visits/<visit_id>/images",
+            "diagnosis": "/visits/<visit_id>/initiate-diagnosis"
+        }
+    })
+
+
+# New endpoint for real-time performance monitoring
+@api.route('/analytics/performance/realtime', methods=['GET'])
+@jwt_required()
+def get_realtime_performance():
+    """Get real-time performance metrics"""
+    # Get metrics from the last 5 minutes
+    five_minutes_ago = datetime.utcnow() - timedelta(minutes=5)
+    
+    metrics = PerformanceMetric.query.filter(
+        PerformanceMetric.timestamp >= five_minutes_ago
+    ).order_by(PerformanceMetric.timestamp.desc()).all()
+    
+    # Calculate current stats
+    if metrics:
+        upload_times = [m.upload_time for m in metrics if m.upload_time and m.endpoint.endswith('/images')]
+        processing_times = [m.processing_time for m in metrics if m.processing_time and m.endpoint.endswith('/initiate-diagnosis')]
+        
+        current_stats = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "upload": {
+                "avg": sum(upload_times) / len(upload_times) if upload_times else 0,
+                "count": len(upload_times)
+            },
+            "processing": {
+                "avg": sum(processing_times) / len(processing_times) if processing_times else 0,
+                "count": len(processing_times)
+            },
+            "total_requests": len(metrics),
+            "error_count": len([m for m in metrics if m.status_code != 200])
+        }
+    else:
+        current_stats = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "upload": {"avg": 0, "count": 0},
+            "processing": {"avg": 0, "count": 0},
+            "total_requests": 0,
+            "error_count": 0
+        }
+    
+    return jsonify(current_stats)
 def allowed_file(filename):
     allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
     is_allowed = '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
@@ -1058,99 +1341,577 @@ def get_visit_image_count(visit_id):
     count = Image.query.filter_by(visit_id=visit_id).count()
     return jsonify({"count": count}), 200
 
-@api.route('/visits/<int:visit_id>/initiate-diagnosis', methods=['POST'])
+
+
+import requests
+import os
+
+
+@api.route('/analytics/client-metrics', methods=['POST'])
 @jwt_required()
-def initiate_diagnosis(visit_id):
+def receive_client_metrics():
+    """Receive and correlate client-side performance metrics with server metrics"""
     try:
-        visit = Visit.query.get_or_404(visit_id)
+        data = request.get_json()
+        client_metrics = data.get('clientMetrics')
+        server_request_id = data.get('serverRequestId')
         
-        # Ensure there are at least 5 images uploaded
-        images = Image.query.filter_by(visit_id=visit_id).all()
-        if len(images) < 5:
-            return jsonify({"error": "At least 5 images are required to start the diagnosis"}), 400
+        if not client_metrics:
+            return jsonify({'error': 'No client metrics provided'}), 400
         
-        # Check if diagnosis has already been performed
-        existing_diagnosis = DiagnosisResult.query.filter_by(visit_id=visit_id, image_id=None).first()
-        if existing_diagnosis:
-            return jsonify({"message": "Diagnosis has already been performed for this visit", 
-                            "diagnosis": diagnosis_result_schema.dump(existing_diagnosis)}), 200
+        # Find the corresponding server metric if request ID provided
+        server_metric = None
+        if server_request_id:
+            server_metric = PerformanceMetric.query.filter_by(
+                request_id=server_request_id
+            ).first()
         
-        # Get image paths
-        image_paths = [image.file_path for image in images]
-        
-        # Prepare the request data for process_images_backend
-        data = {'image_paths': image_paths}
-        
-        # Create a test request context
-        with current_app.test_request_context('/process_images', method='POST', json=data):
-            # Call process_images_backend within the test request context
-            response = process_images_backend()
-            
-        # Check if the response is a tuple (indicating an error response)
-        if isinstance(response, tuple):
-            return response
-        
-        # Parse the JSON response
-        result = response.json
-        
-        # Create an overall DiagnosisResult for the visit
-        overall_diagnosis = DiagnosisResult(
-            visit_id=visit_id,
-            image_id=None,  # This indicates it's an overall result
-            parasite_name=result['dominant_parasite'],
-            average_confidence=result['dominant_confidence'],
-            count=result['total_parasites'],
-            severity_level=result['severity'],
-            status='positive' if result['total_parasites'] > 0 else 'negative',
-            parasite_density=result['parasite_density'],
-            total_wbcs=result['total_wbcs']
+        # Create a correlated metric entry
+        correlated_metric = PerformanceMetric(
+            endpoint=f"client-{client_metrics.get('type', 'unknown')}",
+            method='CLIENT',
+            request_id=client_metrics.get('id'),
+            user_id=get_jwt_identity().get('user_id'),
+            visit_id=client_metrics.get('metadata', {}).get('visitId'),
+            total_time=client_metrics.get('duration', 0) / 1000,  # Convert to seconds
+            status_code=200 if client_metrics.get('status') == 'success' else 500,
+            metadata={
+                'client_metrics': client_metrics,
+                'server_request_id': server_request_id,
+                'steps': client_metrics.get('steps', []),
+                'marks': dict(client_metrics.get('marks', {})) if hasattr(client_metrics.get('marks', {}), 'items') else {},
+                'correlation': {
+                    'has_server_metric': server_metric is not None,
+                    'server_upload_time': server_metric.upload_time if server_metric else None,
+                    'server_processing_time': server_metric.processing_time if server_metric else None,
+                    'end_to_end_time': (client_metrics.get('duration', 0) / 1000) if client_metrics else None
+                }
+            }
         )
-        db.session.add(overall_diagnosis)
         
-        # Create individual DiagnosisResults for each image
-        for image, image_result in zip(images, result['image_results']):
-            individual_diagnosis = DiagnosisResult(
-                visit_id=visit_id,
-                image_id=image.image_id,
-                count=image_result['parasite_count'],
-                wbc_count=image_result['wbc_count']
-            )
-            db.session.add(individual_diagnosis)
+        # Extract specific timings if available
+        if client_metrics.get('type') == 'image-upload':
+            # Calculate network time (total client time - server processing time)
+            if server_metric and server_metric.upload_time:
+                network_time = (client_metrics.get('duration', 0) / 1000) - server_metric.upload_time
+                correlated_metric.metadata['network_time'] = network_time
         
-        # Update visit status
-        visit.status = 'completed'
-        for image in images:
-            image.processing_status = 'completed'
-        
+        db.session.add(correlated_metric)
         db.session.commit()
         
-        # Create notification for doctors
-        admin_users = User.query.filter_by(role='admin').all()
-        for admin in admin_users:
-            create_notification(admin.user_id, f"Diagnosis results ready for visit ID: {visit_id}")
-        # Fetch all diagnosis results for this visit
-        all_diagnoses = DiagnosisResult.query.filter_by(visit_id=visit_id).all()
+        # Emit real-time update if significant
+        if client_metrics.get('duration', 0) > 5000:  # More than 5 seconds
+            notify_slow_operation(
+                endpoint=client_metrics.get('type', 'unknown'),
+                duration=client_metrics.get('duration', 0),
+                operation_type='client'
+            )
         
-        # Prepare the response
-        response_data = {
-            "message": "Diagnosis process completed successfully",
-            "overall_diagnosis": diagnosis_result_schema.dump(overall_diagnosis),
-            "image_diagnoses": [diagnosis_result_schema.dump(d) for d in all_diagnoses if d.image_id is not None],
-            "summary": {
-                "dominant_parasite": result['dominant_parasite'],
-                "average_confidence": result['dominant_confidence'],
-                "total_parasites": result['total_parasites'],
-                "parasite_density": result['parasite_density'],
-                "severity": result['severity'],
-                "total_wbcs": result['total_wbcs']
+        return jsonify({
+            'message': 'Client metrics received',
+            'correlation_id': correlated_metric.id
+        }), 200
+        
+    except Exception as e:
+        current_app.logger.error(f"Error processing client metrics: {str(e)}")
+        return jsonify({'error': 'Failed to process client metrics'}), 500
+
+
+@api.route('/analytics/performance/summary', methods=['GET'])
+@jwt_required()
+def get_performance_summary():
+    """Get a comprehensive performance summary combining client and server metrics"""
+    try:
+        # Get time range from query params
+        hours = request.args.get('hours', 24, type=int)
+        since = datetime.utcnow() - timedelta(hours=hours)
+        
+        # Query both server and client metrics
+        all_metrics = PerformanceMetric.query.filter(
+            PerformanceMetric.timestamp >= since
+        ).all()
+        
+        # Separate client and server metrics
+        server_metrics = [m for m in all_metrics if m.method != 'CLIENT']
+        client_metrics = [m for m in all_metrics if m.method == 'CLIENT']
+        
+        # Calculate statistics
+        summary = {
+            'time_range': f'{hours} hours',
+            'server': {
+                'total_requests': len(server_metrics),
+                'avg_response_time': sum(m.total_time for m in server_metrics) / len(server_metrics) if server_metrics else 0,
+                'error_rate': len([m for m in server_metrics if m.status_code != 200]) / len(server_metrics) if server_metrics else 0,
+                'by_endpoint': {}
+            },
+            'client': {
+                'total_operations': len(client_metrics),
+                'avg_duration': sum(m.total_time for m in client_metrics) / len(client_metrics) if client_metrics else 0,
+                'by_type': {}
+            },
+            'combined': {
+                'total_interactions': len(all_metrics),
+                'slow_operations': len([m for m in all_metrics if m.total_time > 5]),
+                'peak_hour': None
             }
         }
         
-        return jsonify(response_data), 200
+        # Group server metrics by endpoint
+        from collections import defaultdict
+        endpoint_groups = defaultdict(list)
+        for metric in server_metrics:
+            endpoint_groups[metric.endpoint].append(metric)
+        
+        for endpoint, metrics in endpoint_groups.items():
+            summary['server']['by_endpoint'][endpoint] = {
+                'count': len(metrics),
+                'avg_time': sum(m.total_time for m in metrics) / len(metrics),
+                'error_count': len([m for m in metrics if m.status_code != 200])
+            }
+        
+        # Group client metrics by type
+        type_groups = defaultdict(list)
+        for metric in client_metrics:
+            op_type = metric.metadata.get('client_metrics', {}).get('type', 'unknown')
+            type_groups[op_type].append(metric)
+        
+        for op_type, metrics in type_groups.items():
+            summary['client']['by_type'][op_type] = {
+                'count': len(metrics),
+                'avg_duration': sum(m.total_time for m in metrics) / len(metrics),
+                'success_rate': len([m for m in metrics if m.status_code == 200]) / len(metrics) if metrics else 0
+            }
+        
+        # Find peak hour
+        hour_groups = defaultdict(int)
+        for metric in all_metrics:
+            hour = metric.timestamp.strftime('%Y-%m-%d %H:00')
+            hour_groups[hour] += 1
+        
+        if hour_groups:
+            peak_hour = max(hour_groups.items(), key=lambda x: x[1])
+            summary['combined']['peak_hour'] = {
+                'hour': peak_hour[0],
+                'request_count': peak_hour[1]
+            }
+        
+        return jsonify(summary), 200
+        
     except Exception as e:
-        db.session.rollback()
-        current_app.logger.error(f"Error initiating diagnosis: {str(e)}")
-        return jsonify({"error": f"Error initiating diagnosis: {str(e)}"}), 500
+        current_app.logger.error(f"Error generating performance summary: {str(e)}")
+        return jsonify({'error': 'Failed to generate performance summary'}), 500
+
+
+# WebSocket event for requesting specific performance data
+@socketio.on('request_performance_analysis')
+def handle_performance_analysis_request(data):
+    """Analyze performance for specific operations or time periods"""
+    try:
+        analysis_type = data.get('type', 'general')
+        params = data.get('params', {})
+        
+        if analysis_type == 'upload_performance':
+            # Analyze upload performance
+            visit_id = params.get('visitId')
+            metrics = PerformanceMetric.query.filter(
+                PerformanceMetric.visit_id == visit_id,
+                PerformanceMetric.endpoint.like('%/images%')
+            ).all()
+            
+            analysis = {
+                'visit_id': visit_id,
+                'upload_count': len(metrics),
+                'avg_upload_time': sum(m.upload_time for m in metrics if m.upload_time) / len([m for m in metrics if m.upload_time]) if metrics else 0,
+                'total_files': sum(m.num_images for m in metrics if m.num_images) or 0,
+                'total_size': sum(m.file_size for m in metrics if m.file_size) or 0
+            }
+            
+        elif analysis_type == 'diagnosis_performance':
+            # Analyze diagnosis performance
+            visit_id = params.get('visitId')
+            metrics = PerformanceMetric.query.filter(
+                PerformanceMetric.visit_id == visit_id,
+                PerformanceMetric.endpoint.like('%/initiate-diagnosis%')
+            ).all()
+            
+            analysis = {
+                'visit_id': visit_id,
+                'diagnosis_count': len(metrics),
+                'avg_processing_time': sum(m.processing_time for m in metrics if m.processing_time) / len([m for m in metrics if m.processing_time]) if metrics else 0,
+                'success_rate': len([m for m in metrics if m.status_code == 200]) / len(metrics) if metrics else 0
+            }
+            
+        else:
+            # General analysis
+            analysis = {
+                'message': 'General performance analysis',
+                'total_metrics': PerformanceMetric.query.count()
+            }
+        
+        emit('performance_analysis_result', {
+            'type': analysis_type,
+            'analysis': analysis,
+            'timestamp': datetime.utcnow().isoformat()
+        })
+        
+    except Exception as e:
+        emit('performance_analysis_error', {
+            'error': str(e)
+        })   
+
+import cv2
+import numpy as np
+import os
+import json
+import logging
+from flask import current_app
+from datetime import datetime
+
+logger = logging.getLogger(__name__)
+
+def draw_bounding_boxes(image_path, detection_data):
+    """
+    Draw bounding boxes on an image based on detection data from the ML API.
+    
+    Args:
+        image_path (str): Path to the original image
+        detection_data (dict): Detection data from the ML API
+        
+    Returns:
+        str: Path to the annotated image
+    """
+    try:
+        # Ensure image path is absolute
+        if not os.path.isabs(image_path):
+            image_path = os.path.abspath(image_path)
+            
+        # Log current working directory and image path for debugging
+        logger.info(f"Current working directory: {os.getcwd()}")
+        logger.info(f"Attempting to process image: {image_path}")
+        
+        # Validate that image exists
+        if not os.path.exists(image_path):
+            logger.error(f"Image not found: {image_path}")
+            raise FileNotFoundError(f"Image not found: {image_path}")
+        
+        # Create output directory if it doesn't exist
+        output_dir = os.path.join(os.path.dirname(image_path), 'annotated')
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Generate output filename
+        base_filename = os.path.basename(image_path)
+        filename, ext = os.path.splitext(base_filename)
+        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+        output_path = os.path.join(output_dir, f"{filename}_annotated_{timestamp}{ext}")
+        
+        # Read the image
+        logger.info(f"Reading image from: {image_path}")
+        img = cv2.imread(image_path)
+        if img is None:
+            logger.error(f"Failed to read image: {image_path}")
+            raise ValueError(f"Failed to read image: {image_path}")
+        
+        # Get image dimensions
+        height, width, _ = img.shape
+        logger.info(f"Image dimensions: {width}x{height}")
+        
+        # Define colors for different types
+        colors = {
+            'PF': (0, 0, 255),    # Red for P. falciparum (BGR format)
+            'PV': (0, 255, 255),  # Yellow for P. vivax
+            'PM': (255, 0, 0),    # Blue for P. malariae
+            'PO': (0, 255, 0),    # Green for P. ovale
+            'WBC': (255, 0, 255), # Purple for white blood cells
+            'default': (255, 255, 255)  # White for unknown
+        }
+        
+        # Log detection data structure
+        logger.info(f"Detection data: {detection_data}")
+        logger.info(f"Number of parasites in detection data: {len(detection_data.get('parasites_detected', []))}")
+        logger.info(f"Number of WBCs in detection data: {detection_data.get('white_blood_cells_detected', 0)}")
+        
+        # Add info banner at the top
+        info_height = 40
+        canvas = np.zeros((height + info_height, width, 3), dtype=np.uint8)
+        canvas[info_height:, :] = img  # Add the original image below the info banner
+        canvas[:info_height, :] = (240, 240, 240)  # Light gray banner
+        
+        # Add detection summary to banner
+        parasite_count = detection_data.get('parasite_count', 0)
+        wbc_count = detection_data.get('white_blood_cells_detected', 0)
+        
+        # Check for different API response formats
+        if 'parasites_detected' in detection_data:
+            logger.info("Using 'parasites_detected' format")
+            parasites = detection_data.get('parasites_detected', [])
+        else:
+
+            logger.info("Using alternate format")
+            # Try alternate format
+            parasites = []
+            for key in detection_data:
+                if isinstance(detection_data[key], dict) and 'bbox' in detection_data[key]:
+                    parasites.append(detection_data[key])
+        
+        # Add text to banner
+        cv2.putText(
+            canvas, 
+            f"Parasites: {parasite_count}   WBCs: {wbc_count}", 
+            (10, 25), 
+            cv2.FONT_HERSHEY_SIMPLEX, 
+            0.7, 
+            (0, 0, 0), 
+            2
+        )
+        
+        # Process parasites detected
+        if parasites:
+            logger.info(f"Processing {len(parasites)} parasites")
+            # In your visualization_utils.py, inside the parasites loop:
+            logger.info(f"Parasite: {parasite}, has valid bbox: {bbox is not None and len(bbox) == 4}")
+            for parasite in parasites:
+                # Safely extract bbox
+                bbox = None
+                if isinstance(parasite, dict):
+                    bbox = parasite.get('bbox')
+                
+                if not bbox or len(bbox) != 4:
+                    logger.warning(f"Invalid bbox in parasite: {parasite}")
+                    continue
+                
+                # Extract coordinates
+                x1, y1, x2, y2 = map(int, bbox)
+                
+                # Adjust Y coordinates for the info banner
+                y1 += info_height
+                y2 += info_height
+                
+                # Determine type and get color
+                p_type = parasite.get('type', 'default')
+                confidence = parasite.get('confidence', 0.0)
+                color = colors.get(p_type, colors['default'])
+                
+                # Draw bounding box
+                cv2.rectangle(canvas, (x1, y1), (x2, y2), color, 2)
+                
+                # Create label with type and confidence
+                label = f"{p_type}: {confidence:.2f}"
+                
+                # Draw background for text
+                (text_width, text_height), _ = cv2.getTextSize(
+                    label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1
+                )
+                
+                # Draw text background
+                cv2.rectangle(
+                    canvas,
+                    (x1, y1 - text_height - 5),
+                    (x1 + text_width + 5, y1),
+                    color,
+                    -1  # Filled rectangle
+                )
+                
+                # Draw text label
+                cv2.putText(
+                    canvas,
+                    label,
+                    (x1, y1 - 5),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5,
+                    (255, 255, 255),  # White text
+                    1
+                )
+        
+        # Process WBCs if they have bounding boxes
+        # Some API responses might include WBC bounding boxes
+        if 'wbc_bboxes' in detection_data:
+            wbc_bboxes = detection_data.get('wbc_bboxes', [])
+            logger.info(f"Processing {len(wbc_bboxes)} WBCs with bboxes")
+            
+            for bbox in wbc_bboxes:
+                if not bbox or len(bbox) != 4:
+                    continue
+                
+                # Extract coordinates
+                x1, y1, x2, y2 = map(int, bbox)
+                
+                # Adjust Y coordinates for the info banner
+                y1 += info_height
+                y2 += info_height
+                
+                # Draw rectangle for WBC
+                color = colors['WBC']
+                cv2.rectangle(canvas, (x1, y1), (x2, y2), color, 2)
+                
+                # Add WBC label
+                cv2.putText(
+                    canvas,
+                    "WBC",
+                    (x1, y1 - 5),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5,
+                    color,
+                    1
+                )
+        
+        # Save the annotated image
+        logger.info(f"Saving annotated image to: {output_path}")
+        cv2.imwrite(output_path, canvas)
+        
+        return output_path
+        
+    except Exception as e:
+        logger.error(f"Error in draw_bounding_boxes: {str(e)}")
+        # Re-raise the exception to be handled by the caller
+        raise
+
+@api.route('/images/<int:image_id>/with-detections', methods=['GET'])
+# @jwt_required()
+def get_image_with_detections(image_id):
+    """
+    Generates and returns an image with bounding boxes for detected parasites
+    """
+    try:
+        # Get the image
+        image = Image.query.get_or_404(image_id)
+        
+        # Check if we need to generate or regenerate the image
+        force_regenerate = request.args.get('force', 'false').lower() == 'true'
+        
+        # First check if we already have an annotated version
+        if not force_regenerate:
+            # Look for existing annotated image
+            base_path = os.path.dirname(image.file_path)
+            annotated_dir = os.path.join(base_path, 'annotated')
+            base_filename = os.path.basename(image.file_path)
+            filename, ext = os.path.splitext(base_filename)
+            
+            # Look for any annotated version of this image
+            if os.path.exists(annotated_dir):
+                existing_files = [f for f in os.listdir(annotated_dir) if f.startswith(f"{filename}_annotated_")]
+                if existing_files:
+                    # Use the most recent one
+                    existing_files.sort(reverse=True)
+                    annotated_path = os.path.join(annotated_dir, existing_files[0])
+                    return send_file(annotated_path)
+        
+        # No existing annotated image found, or force regenerate is True
+        
+        # Retrieve the detection data from metadata
+        metadata = Metadata.query.filter_by(
+            entity_id=image_id,
+            entity_type='image',
+            key='detection_data'
+        ).first()
+        
+        if not metadata:
+            return jsonify({"error": "No detection data found for this image"}), 404
+        
+        # Parse the detection data
+        detection_data = json.loads(metadata.value)
+        
+        # Import the visualization utility
+        from .visualization_utils import draw_bounding_boxes
+        
+        # Generate the annotated image
+        annotated_path = draw_bounding_boxes(image.file_path, detection_data)
+        
+        # Return the annotated image
+        return send_file(annotated_path)
+        
+    except FileNotFoundError as e:
+        current_app.logger.error(f"File not found: {str(e)}")
+        return jsonify({"error": "Image file not found"}), 404
+        
+    except Exception as e:
+        current_app.logger.error(f"Error generating image with detections: {str(e)}")
+        return jsonify({"error": f"Failed to generate annotated image: {str(e)}"}), 500
+    
+@api.route('/visits/<int:visit_id>/detection-summary', methods=['GET'])
+@jwt_required()
+def get_visit_detection_summary(visit_id):
+    """
+    Returns summary of detections for all images in a visit
+    """
+    try:
+        # Get all images for this visit
+        images = Image.query.filter_by(visit_id=visit_id).all()
+        
+        if not images:
+            return jsonify({"error": "No images found for this visit"}), 404
+        
+        # Get the diagnosis result for this visit
+        diagnosis = DiagnosisResult.query.filter_by(visit_id=visit_id, image_id=None).first()
+        
+        # Prepare the summary
+        summary = {
+            "visit_id": visit_id,
+            "diagnosis_status": diagnosis.status if diagnosis else "pending",
+            "parasite_name": diagnosis.parasite_name if diagnosis else None,
+            "confidence": diagnosis.average_confidence if diagnosis else None,
+            "severity": diagnosis.severity_level if diagnosis else None,
+            "parasite_density": diagnosis.parasite_density if diagnosis else None,
+            "total_parasites": diagnosis.count if diagnosis else 0,
+            "total_wbcs": diagnosis.total_wbcs if diagnosis else 0,
+            "images": []
+        }
+        
+        # Get detection data for each image
+        for image in images:
+            image_data = {
+                "image_id": image.image_id,
+                "file_path": image.file_path,
+                "smear_type": image.smear_type,
+                "test_type": image.test_type,
+                "processing_status": image.processing_status
+            }
+            
+            # Get image diagnosis
+            image_diagnosis = DiagnosisResult.query.filter_by(
+                visit_id=visit_id, 
+                image_id=image.image_id
+            ).first()
+            
+            if image_diagnosis:
+                image_data["parasite_count"] = image_diagnosis.count
+                image_data["wbc_count"] = image_diagnosis.wbc_count
+            
+            # Get detection metadata if it exists
+            metadata = Metadata.query.filter_by(
+                entity_id=image.image_id,
+                entity_type='image',
+                key='detection_data'
+            ).first()
+            
+            if metadata:
+                detection_data = json.loads(metadata.value)
+                
+                # Add basic detection info (without full bounding box data to reduce payload size)
+                image_data["detections"] = {
+                    "parasite_count": detection_data.get("parasite_count", 0),
+                    "wbc_count": detection_data.get("white_blood_cells_detected", 0),
+                    "parasites": [
+                        {
+                            "type": p.get("type"),
+                            "confidence": p.get("confidence")
+                        } for p in detection_data.get("parasites_detected", [])
+                    ]
+                }
+            
+            # Add annotated image URL
+            image_data["annotated_image_url"] = url_for(
+                'api.get_image_with_detections',
+                image_id=image.image_id,
+                _external=True
+            )
+            
+            summary["images"].append(image_data)
+        
+        return jsonify(summary)
+        
+    except Exception as e:
+        current_app.logger.error(f"Error getting detection summary: {str(e)}")
+        return jsonify({"error": f"Failed to get detection summary: {str(e)}"}), 500
 
 @api.route('/images', methods=['GET'])
 @jwt_required()
@@ -1233,18 +1994,6 @@ def get_dashboard_stats():
     # Log the result structure
     logging.info(f'Result: {result}')
 
-    # # Convert result to dictionary by accessing the values directly
-    # if result:
-    #     stats = {
-    #         'total_patients': result[0],
-    #         'pending_results': result[1],
-    #         'completed_diagnoses': result[2],
-    #         'new_diagnoses': result[3],
-    #         'diagnosis_distribution': result[4],
-    #     }
-    # else:
-    #     return jsonify({"error": "No data found"}), 404
-     # Check if result is None or if certain values are None
     if not result or any(value is None for value in result):
         logging.error(f"Some values are None in the result: {result}")
         return jsonify({"error": "No data found"}), 404
@@ -1301,34 +2050,7 @@ def get_chart_data():
         'pieChartData': pie_chart_data,
         'lineChartData': line_chart_data
     })
-# @api.route('/patients/search', methods=['GET'])
-# @jwt_required()
-# def search_patients():
-#        query = request.args.get('query', '')
-#        status = request.args.get('status', '')
-#        date_from = request.args.get('date_from', '')
-#        date_to = request.args.get('date_to', '')
-       
-#        patients = Patient.query
-       
-#        if query:
-#            patients = patients.filter(or_(
-#                Patient.name.ilike(f'%{query}%'),
-#                Patient.patient_id.ilike(f'%{query}%'),
-#                Patient.email.ilike(f'%{query}%')
-#            ))
-       
-#        if status:
-#            patients = patients.join(Image).join(DiagnosisResult).filter(DiagnosisResult.status == status)
-       
-#        if date_from:
-#            patients = patients.filter(Patient.created_at >= datetime.strptime(date_from, '%Y-%m-%d'))
-       
-#        if date_to:
-#            patients = patients.filter(Patient.created_at <= datetime.strptime(date_to, '%Y-%m-%d'))
-       
-#        result = patients_schema.dump(patients.all())
-#        return jsonify(result), 200
+
 @api.route('/patients/search', methods=['GET'])
 @jwt_required()
 @monitor_query_performance
@@ -1545,95 +2267,6 @@ def get_patients_with_visits():
         print(f"Error fetching patients with visits: {str(e)}")
         return jsonify({"message": "Error fetching patients with visits"}), 500
 
-
-@api.route('/process_images', methods=['POST'])
-def process_images_backend():
-    print("Processing request received in backend")
-    data = request.json
-    print("Data received:", data)
-
-    if not data or 'image_paths' not in data:
-        return jsonify({'error': 'No image paths provided in the request'}), 400
-
-    image_paths = data['image_paths']
-    
-    # Check if the paths exist
-    for path in image_paths:
-        if not os.path.exists(path):
-            return jsonify({'error': f'Image not found: {path}'}), 400
-
-    # Process the images using the logic from Updated_Helpers.py
-    results = process_images(MODEL_PATH, image_paths)
-
-    return jsonify(results)
-
-# from flask import send_file
-# from io import BytesIO
-# from reportlab.lib.pagesizes import letter
-# from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-# from reportlab.lib.styles import getSampleStyleSheet
-# from reportlab.lib import colors
-# from sqlalchemy import func
-# import json
-
-
-# @api.route('/visits/<int:visit_id>/download-report', methods=['GET'])
-# @jwt_required()
-# def download_visit_report(visit_id):
-#     visit = Visit.query.get_or_404(visit_id)
-#     patient = Patient.query.get(visit.patient_id)
-#     diagnosis = DiagnosisResult.query.filter_by(visit_id=visit_id, image_id=None).first()
-
-#     buffer = BytesIO()
-#     doc = SimpleDocTemplate(buffer, pagesize=letter)
-#     styles = getSampleStyleSheet()
-#     elements = []
-
-#     # Add title
-#     elements.append(Paragraph(f"Visit Report - {visit.visit_date.strftime('%Y-%m-%d')}", styles['Title']))
-#     elements.append(Spacer(1, 12))
-
-#     # Add patient information
-#     elements.append(Paragraph(f"Patient: {patient.name}", styles['Heading2']))
-#     elements.append(Paragraph(f"Patient ID: {patient.patient_id}", styles['Normal']))
-#     elements.append(Paragraph(f"Age: {patient.age}", styles['Normal']))
-#     elements.append(Paragraph(f"Gender: {patient.gender}", styles['Normal']))
-#     elements.append(Spacer(1, 12))
-
-#     # Add visit information
-#     elements.append(Paragraph("Visit Details", styles['Heading2']))
-#     elements.append(Paragraph(f"Reason: {visit.reason}", styles['Normal']))
-#     elements.append(Paragraph(f"Symptoms: {visit.symptoms}", styles['Normal']))
-#     elements.append(Paragraph(f"Notes: {visit.notes}", styles['Normal']))
-#     elements.append(Spacer(1, 12))
-
-#     # Add diagnosis information
-#     if diagnosis:
-#         elements.append(Paragraph("Diagnosis Results", styles['Heading2']))
-#         data = [
-#             ["Parasite", diagnosis.parasite_name],
-#             ["Status", diagnosis.status],
-#             ["Confidence", f"{diagnosis.average_confidence:.2f}%"],
-#             ["Count", str(diagnosis.count)],
-#             ["Severity", diagnosis.severity_level],
-#             ["Parasite Density", f"{diagnosis.parasite_density:.2f}"],
-#             ["Total WBCs", str(diagnosis.total_wbcs)]
-#         ]
-#         t = Table(data)
-#         t.setStyle(TableStyle([
-#             ('BACKGROUND', (0, 0), (0, -1), colors.grey),
-#             ('TEXTCOLOR', (0, 0), (0, -1), colors.whitesmoke),
-#             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-#             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-#             ('FONTSIZE', (0, 0), (-1, -1), 10),
-#             ('BOTTOMPADDING', (0, 0), (-1, -1), 12),
-#             ('BACKGROUND', (1, 1), (-1, -1), colors.beige),
-#         ]))
-#         elements.append(t)
-
-#     doc.build(elements)
-#     buffer.seek(0)
-#     return send_file(buffer, as_attachment=True, download_name=f'visit_report_{visit_id}.pdf', mimetype='application/pdf')
 from flask import send_file
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
@@ -1672,11 +2305,6 @@ def header_footer(canvas, doc):
     # Draw a colored banner at the top
     canvas.setFillColor(header_color)
     canvas.rect(0, doc.height + doc.topMargin - 0.5*inch, doc.width + doc.leftMargin + doc.rightMargin, 1*inch, fill=1, stroke=0)
-    
-    # Add hospital logo (placeholder - in production, use an actual image file)
-    # logo_path = os.path.join(os.path.dirname(_file_), 'static/logo.png')
-    # if os.path.exists(logo_path):
-    #     canvas.drawImage(logo_path, doc.leftMargin, doc.height + doc.topMargin + 0.2*inch, width=0.8*inch, height=0.8*inch)
     
     # Add hospital name
     canvas.setFont("Helvetica-Bold", 16)
